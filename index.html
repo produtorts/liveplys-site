@@ -6,7 +6,7 @@
 <link rel="icon" type="image/png" href="media/logo-verde.png">
 <meta property="og:title" content="Live Plys Agency">
 <meta property="og:description" content="Agência de lives no TikTok: treinamento do zero, acompanhamento semanal e bônus por metas. Inscrição gratuita.">
-<meta property="og:image" content="media/kit.jpg">
+<meta property="og:image" content="https://liveplysagency.com.br/media/kit.jpg">
 <title>Live Plys Agency</title>
 <meta name="description" content="Agência de lives no TikTok: treinamento do zero, acompanhamento semanal e bônus por metas. Inscrição gratuita.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,6 +69,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .celular .ao-vivo::before { content: ""; width: 7px; height: 7px; border-radius: 999px; background: #FFFFFF; animation: pisca 1.2s infinite; }
 @keyframes pisca { 50% { opacity: .2; } }
 @media (prefers-reduced-motion: reduce) { .celular .ao-vivo::before { animation: none; } }
+.som { position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); min-height: 44px; padding: 0 20px; border-radius: 999px; border: 0; background: var(--lima); color: var(--noite-2); font-family: var(--corpo); font-weight: 900; font-size: 15px; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.35); white-space: nowrap; }
+
+/* Resultados */
+.mural { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.ganhos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.peca { margin: 0; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.peca img { width: 100%; height: auto; display: block; border-radius: 18px; box-shadow: 0 0 0 2px var(--linha); }
+.peca.alta img { aspect-ratio: 3 / 4.6; object-fit: cover; object-position: top; }
+.peca figcaption { display: flex; flex-direction: column; gap: 2px; }
+.peca strong { font-size: 17px; font-weight: 900; }
+.peca span { font-size: 14px; color: var(--suave); font-weight: 700; }
 .onda { position: absolute; z-index: -1; right: -60px; bottom: 40px; width: 360px; height: auto; }
 
 /* Seções */
@@ -152,7 +163,8 @@ form .botao { grid-column: 1 / -1; width: 100%; }
 @media (max-width: 900px) {
   .abertura .wrap, .duas, .inscricao .wrap { grid-template-columns: minmax(0, 1fr); }
   .abertura .wrap { padding-block: 36px 56px; gap: 40px; }
-  .passos, .momentos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .passos, .momentos, .mural { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ganhos { grid-template-columns: minmax(0, 1fr); max-width: 520px; }
   .beneficios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 560px) {
@@ -192,8 +204,9 @@ form .botao { grid-column: 1 / -1; width: 100%; }
         </ul>
       </div>
       <div class="celular">
-        <video src="media/kit-mudo.mp4" poster="media/kit.jpg" autoplay muted loop playsinline aria-label="Kit de boas-vindas da Live Plys sendo aberto"></video>
+        <video id="video-topo" src="media/batalha.mp4" poster="media/batalha-capa.jpg" autoplay muted loop playsinline aria-label="Host da Live Plys recebendo presentes numa batalha ao vivo"></video>
         <span class="ao-vivo">AO VIVO</span>
+        <button class="som" id="som" type="button" aria-pressed="false">Ativar som</button>
       </div>
     </div>
   </section>
@@ -207,8 +220,8 @@ form .botao { grid-column: 1 / -1; width: 100%; }
       </div>
       <div class="rolagem" tabindex="0" aria-label="Vídeos das hosts da Live Plys">
         <figure class="prova">
-          <video src="media/batalha.mp4" poster="media/batalha.jpg" controls playsinline preload="none"></video>
-          <figcaption><strong>Batalha ao vivo</strong><span>Vitória com a torcida da live</span></figcaption>
+          <video src="media/kit.mp4" poster="media/kit.jpg" controls playsinline preload="none"></video>
+          <figcaption><strong>Kit das destaques</strong><span>Prêmio para quem se destacou no mês</span></figcaption>
         </figure>
         <figure class="prova">
           <video src="media/kit-host.mp4" poster="media/kit-host.jpg" controls playsinline preload="none"></video>
@@ -228,6 +241,28 @@ form .botao { grid-column: 1 / -1; width: 100%; }
         </figure>
       </div>
       <p class="dica-rolar">Arraste para o lado e toque para assistir com som.</p>
+    </div>
+  </section>
+
+  <section class="secao" id="resultados">
+    <div class="wrap">
+      <div class="cabeca">
+        <span class="pilula">Resultados reais</span>
+        <h2>Ranking, placas e <em>ganhos</em> das nossas hosts</h2>
+        <p>Tudo aqui é de hosts da Live Plys, compartilhado com autorização delas.</p>
+      </div>
+      <div class="mural">
+        <figure class="peca alta"><img src="media/ranking-top1.jpg" alt="Classificação diária do TikTok LIVE com uma host da Live Plys em 1º lugar" loading="lazy" width="588" height="934"><figcaption><strong>Top 1 no ranking diário</strong><span>Mais de 1 milhão de diamantes no dia</span></figcaption></figure>
+        <figure class="peca alta"><img src="media/placa-2m.jpg" alt="Host segurando a placa de 2 milhões de diamantes no mês de julho" loading="lazy" width="900" height="1457"><figcaption><strong>Placa de 2 milhões</strong><span>Diamantes no mês de julho</span></figcaption></figure>
+        <figure class="peca alta"><img src="media/placa-500k.jpg" alt="Placa de 500 mil diamantes no mês de novembro" loading="lazy" width="738" height="1312"><figcaption><strong>Placa de 500 mil</strong><span>Diamantes no mês de novembro</span></figcaption></figure>
+        <figure class="peca alta"><img src="media/placas-top1.jpg" alt="Duas placas de Top 1 nos desafios Diamond Streamer e Elite Streamer" loading="lazy" width="900" height="1200"><figcaption><strong>Top 1 nos desafios</strong><span>Diamond Streamer e Elite Streamer</span></figcaption></figure>
+      </div>
+      <div class="ganhos">
+        <figure class="peca"><img src="media/ganhos-1.jpg" alt="Recompensas de conteúdo de R$ 18.068,78" loading="lazy" width="900" height="446"></figure>
+        <figure class="peca"><img src="media/ganhos-2.jpg" alt="Recompensas de conteúdo de R$ 34.159,11" loading="lazy" width="900" height="445"></figure>
+        <figure class="peca"><img src="media/ganhos-3.jpg" alt="Recompensas de conteúdo de R$ 43.224,36" loading="lazy" width="900" height="445"></figure>
+      </div>
+      <p class="nota">Prints reais de recompensas de hosts da agência. Os resultados variam de pessoa para pessoa e dependem da dedicação de cada uma.</p>
     </div>
   </section>
 
@@ -317,7 +352,8 @@ form .botao { grid-column: 1 / -1; width: 100%; }
         <div class="campo"><label for="tiktok">@ do TikTok</label><input id="tiktok" name="tiktok" placeholder="@seuperfil" autocapitalize="none" required></div>
         <div class="campo"><label for="agencia">Já está em outra agência?</label><select id="agencia" name="agencia" required><option value="">Escolha</option><option>Não</option><option>Sim</option><option>Já estive, mas saí</option></select></div>
         <div class="campo"><label for="dias">Dias de live por semana</label><select id="dias" name="dias" required><option value="">Escolha</option><option>1 a 2 dias</option><option>3 a 4 dias</option><option>5 dias ou mais</option></select></div>
-        <div class="campo largo"><label for="live">Você já faz live hoje?</label><select id="live" name="live" required><option value="">Escolha</option><option>Ainda não, quero começar</option><option>Sim, de vez em quando</option><option>Sim, faço sempre</option></select></div>
+        <div class="campo"><label for="horas">Horas disponíveis por dia</label><select id="horas" name="horas" required><option value="">Escolha</option><option>Até 1 hora</option><option>1 a 2 horas</option><option>2 a 4 horas</option><option>Mais de 4 horas</option></select></div>
+        <div class="campo"><label for="live">Você já faz live hoje?</label><select id="live" name="live" required><option value="">Escolha</option><option>Ainda não, quero começar</option><option>Sim, de vez em quando</option><option>Sim, faço sempre</option></select></div>
         <p class="erro" id="erro" role="alert"></p>
         <button class="botao lima" type="submit">Continuar no WhatsApp</button>
         <div class="pronto" id="pronto" hidden>
@@ -348,7 +384,15 @@ form .botao { grid-column: 1 / -1; width: 100%; }
   var erro = document.getElementById('erro');
   var pronto = document.getElementById('pronto');
   var link = document.getElementById('link-whats');
-  var ids = ['nome', 'idade', 'tiktok', 'agencia', 'dias', 'live'];
+  var ids = ['nome', 'idade', 'tiktok', 'agencia', 'dias', 'horas', 'live'];
+  var video = document.getElementById('video-topo');
+  var som = document.getElementById('som');
+  som.addEventListener('click', function () {
+    video.muted = !video.muted;
+    if (!video.muted) { video.volume = 1; var p = video.play(); if (p && p.catch) p.catch(function () {}); }
+    som.textContent = video.muted ? 'Ativar som' : 'Desativar som';
+    som.setAttribute('aria-pressed', String(!video.muted));
+  });
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     erro.textContent = '';
@@ -371,6 +415,7 @@ form .botao { grid-column: 1 / -1; width: 100%; }
       'TikTok: ' + arroba + '\n' +
       'Já está em agência: ' + v.agencia + '\n' +
       'Dias de live por semana: ' + v.dias + '\n' +
+      'Horas disponíveis por dia: ' + v.horas + '\n' +
       'Faz live hoje: ' + v.live;
     link.href = 'https://wa.me/5511910980910?text=' + encodeURIComponent(msg);
     pronto.hidden = false;
