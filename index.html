@@ -72,7 +72,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .som { position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); min-height: 44px; padding: 0 20px; border-radius: 999px; border: 0; background: var(--lima); color: var(--noite-2); font-family: var(--corpo); font-weight: 900; font-size: 15px; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.35); white-space: nowrap; }
 
 /* Resultados */
-.mural { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.destaque { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 32px; align-items: start; padding: 24px; border-radius: 32px; background: var(--noite-2); box-shadow: 0 0 0 2px var(--roxo); }
+.destaque-video { margin: 0; }
+.destaque-video video { width: 100%; aspect-ratio: 464 / 718; max-width: 100%; border-radius: 22px; background: var(--noite); display: block; object-fit: cover; }
+.destaque-texto { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr); gap: 16px 24px; align-items: start; min-width: 0; }
+.destaque-texto .pilula, .destaque-texto h3, .destaque-texto p { grid-column: 1; }
+.destaque-texto .pilula { justify-self: start; }
+.destaque-texto h3 { font-size: clamp(36px, 4.4vw, 54px); }
+.destaque-texto h3 em { font-style: normal; color: var(--lima); }
+.destaque-texto p { color: var(--suave); font-weight: 700; }
+.destaque-texto .peca { grid-column: 2; grid-row: 1 / span 4; }
+.mural { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
 .ganhos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .peca { margin: 0; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .peca img { width: 100%; height: auto; display: block; border-radius: 18px; box-shadow: 0 0 0 2px var(--linha); }
@@ -163,8 +173,10 @@ form .botao { grid-column: 1 / -1; width: 100%; }
 @media (max-width: 900px) {
   .abertura .wrap, .duas, .inscricao .wrap { grid-template-columns: minmax(0, 1fr); }
   .abertura .wrap { padding-block: 36px 56px; gap: 40px; }
-  .passos, .momentos, .mural { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .passos, .momentos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ganhos { grid-template-columns: minmax(0, 1fr); max-width: 520px; }
+  .destaque { grid-template-columns: minmax(0, 1fr); }
+  .destaque-video { max-width: 380px; width: 100%; justify-self: center; }
   .beneficios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 560px) {
@@ -172,6 +184,10 @@ form .botao { grid-column: 1 / -1; width: 100%; }
   .passos { grid-template-columns: minmax(0, 1fr); }
   .beneficios { grid-template-columns: minmax(0, 1fr); }
   form { grid-template-columns: minmax(0, 1fr); padding: 20px; }
+  .mural { grid-template-columns: minmax(0, 1fr); }
+  .destaque { padding: 16px; }
+  .destaque-texto { grid-template-columns: minmax(0, 1fr); }
+  .destaque-texto .peca { grid-column: 1; grid-row: auto; max-width: 340px; }
   .secao .wrap, .inscricao .wrap { padding-block: 56px; }
   .acoes .botao { width: 100%; }
 }
@@ -251,8 +267,18 @@ form .botao { grid-column: 1 / -1; width: 100%; }
         <h2>Ranking, placas e <em>ganhos</em> das nossas hosts</h2>
         <p>Tudo aqui é de hosts da Live Plys, compartilhado com autorização delas.</p>
       </div>
+      <div class="destaque">
+        <figure class="destaque-video">
+          <video src="media/dia-top1.mp4" poster="media/dia-top1.jpg" controls playsinline preload="none"></video>
+        </figure>
+        <div class="destaque-texto">
+          <span class="pilula roxa">O dia do Top 1</span>
+          <h3>Nossa host em <em>1º lugar</em> no ranking diário</h3>
+          <p>No vídeo, a live do dia em que ela chegou ao topo. Ao lado, o print da classificação: mais de 1 milhão de diamantes no dia e 683,7 mil à frente da segunda colocada.</p>
+          <figure class="peca"><img src="media/ranking-top1.jpg" alt="Classificação diária do TikTok LIVE com uma host da Live Plys em 1º lugar" loading="lazy" width="588" height="934"></figure>
+        </div>
+      </div>
       <div class="mural">
-        <figure class="peca alta"><img src="media/ranking-top1.jpg" alt="Classificação diária do TikTok LIVE com uma host da Live Plys em 1º lugar" loading="lazy" width="588" height="934"><figcaption><strong>Top 1 no ranking diário</strong><span>Mais de 1 milhão de diamantes no dia</span></figcaption></figure>
         <figure class="peca alta"><img src="media/placa-2m.jpg" alt="Host segurando a placa de 2 milhões de diamantes no mês de julho" loading="lazy" width="900" height="1457"><figcaption><strong>Placa de 2 milhões</strong><span>Diamantes no mês de julho</span></figcaption></figure>
         <figure class="peca alta"><img src="media/placa-500k.jpg" alt="Placa de 500 mil diamantes no mês de novembro" loading="lazy" width="738" height="1312"><figcaption><strong>Placa de 500 mil</strong><span>Diamantes no mês de novembro</span></figcaption></figure>
         <figure class="peca alta"><img src="media/placas-top1.jpg" alt="Duas placas de Top 1 nos desafios Diamond Streamer e Elite Streamer" loading="lazy" width="900" height="1200"><figcaption><strong>Top 1 nos desafios</strong><span>Diamond Streamer e Elite Streamer</span></figcaption></figure>
