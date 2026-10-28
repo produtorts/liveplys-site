@@ -410,6 +410,8 @@ form .botao { grid-column: 1 / -1; width: 100%; }
   var erro = document.getElementById('erro');
   var pronto = document.getElementById('pronto');
   var link = document.getElementById('link-whats');
+  var URL_PLANILHA = 'https://script.google.com/macros/s/AKfycbwNgmFP0NcyW8wnZyD76tA6nu0MC9xoEi9UWTOSWyMH5DPiEI3Ll_oYJpwmdv3OtuwF/exec';
+  var ultimoEnvio = '';
   var ids = ['nome', 'idade', 'tiktok', 'agencia', 'dias', 'horas', 'live'];
   var video = document.getElementById('video-topo');
   var som = document.getElementById('som');
@@ -444,6 +446,13 @@ form .botao { grid-column: 1 / -1; width: 100%; }
       'Horas disponíveis por dia: ' + v.horas + '\n' +
       'Faz live hoje: ' + v.live;
     link.href = 'https://wa.me/5511910980910?text=' + encodeURIComponent(msg);
+    var dados = JSON.stringify({ nome: v.nome, idade: idade, tiktok: arroba, agencia: v.agencia, dias: v.dias, horas: v.horas, live: v.live });
+    if (URL_PLANILHA && dados !== ultimoEnvio) {
+      ultimoEnvio = dados;
+      try {
+        fetch(URL_PLANILHA, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: dados }).catch(function () {});
+      } catch (err) {}
+    }
     pronto.hidden = false;
     link.focus();
   });
