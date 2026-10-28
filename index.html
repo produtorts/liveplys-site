@@ -90,6 +90,19 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .peca figcaption { display: flex; flex-direction: column; gap: 2px; }
 .peca strong { font-size: 17px; font-weight: 900; }
 .peca span { font-size: 14px; color: var(--suave); font-weight: 700; }
+
+/* Fotos novas */
+.palco { position: relative; justify-self: center; width: min(560px, 100%); display: flex; justify-content: center; padding-block: 24px; }
+.palco .celular { position: relative; z-index: 1; }
+.cartao-foto { position: absolute; z-index: 0; width: 190px; height: auto; aspect-ratio: 3 / 4; max-width: 40%; object-fit: cover; border-radius: 24px; border: 4px solid var(--noite); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45); }
+.cartao-a { left: -70px; bottom: 60px; transform: rotate(-8deg); }
+.cartao-b { right: -70px; top: 50px; transform: rotate(7deg); }
+.abertura { overflow-x: clip; }
+.foto-arco { margin: 0; }
+.foto-arco img { width: 100%; height: auto; aspect-ratio: 3 / 4; max-width: 100%; object-fit: cover; display: block; border-radius: 999px 999px 28px 28px; }
+.foto-arco.pequena { width: 100%; max-width: 300px; margin-top: 22px; }
+.beneficios-bloco { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr); gap: 44px; align-items: center; }
+.beneficios-bloco .beneficios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .onda { position: absolute; z-index: -1; right: -60px; bottom: 40px; width: 360px; height: auto; }
 
 /* Seções */
@@ -131,7 +144,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .nota { font-size: 13px; color: var(--suave); font-weight: 700; }
 
 /* Requisitos e FAQ */
-.duas { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 48px; align-items: start; }
+.secao .wrap.duas, .duas { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 48px; align-items: start; }
 .lista-check { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; font-size: 18px; font-weight: 800; }
 .lista-check li { display: flex; gap: 14px; align-items: flex-start; }
 .lista-check li::before { content: "✓"; flex-shrink: 0; width: 30px; height: 30px; border-radius: 999px; background: var(--lima); color: var(--noite-2); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; }
@@ -171,11 +184,13 @@ form .botao { grid-column: 1 / -1; width: 100%; }
 .legal { width: 100%; font-size: 13px; color: var(--suave); font-weight: 700; }
 
 @media (max-width: 900px) {
-  .abertura .wrap, .duas, .inscricao .wrap { grid-template-columns: minmax(0, 1fr); }
+  .abertura .wrap, .secao .wrap.duas, .inscricao .wrap { grid-template-columns: minmax(0, 1fr); }
   .abertura .wrap { padding-block: 36px 56px; gap: 40px; }
   .passos, .momentos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ganhos { grid-template-columns: minmax(0, 1fr); max-width: 520px; }
   .destaque { grid-template-columns: minmax(0, 1fr); }
+  .beneficios-bloco { grid-template-columns: minmax(0, 1fr); }
+  .beneficios-bloco .foto-arco { max-width: 320px; width: 100%; justify-self: center; }
   .destaque-video { max-width: 380px; width: 100%; justify-self: center; }
   .beneficios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -185,6 +200,11 @@ form .botao { grid-column: 1 / -1; width: 100%; }
   .beneficios { grid-template-columns: minmax(0, 1fr); }
   form { grid-template-columns: minmax(0, 1fr); padding: 20px; }
   .mural { grid-template-columns: minmax(0, 1fr); }
+  .beneficios-bloco .beneficios { grid-template-columns: minmax(0, 1fr); }
+  .cartao-foto { width: 120px; border-width: 3px; border-radius: 18px; }
+  .cartao-a { left: -6px; bottom: 40px; }
+  .cartao-b { right: -6px; top: 40px; }
+  .palco .celular { width: min(250px, 66%); }
   .destaque { padding: 16px; }
   .destaque-texto { grid-template-columns: minmax(0, 1fr); }
   .destaque-texto .peca { grid-column: 1; grid-row: auto; max-width: 340px; }
@@ -219,10 +239,14 @@ form .botao { grid-column: 1 / -1; width: 100%; }
           <li>Pode começar do zero</li>
         </ul>
       </div>
+      <div class="palco">
+      <img class="cartao-foto cartao-a" src="media/live-asiatica.jpg" alt="" width="720" height="960">
+      <img class="cartao-foto cartao-b" src="media/live-loira.jpg" alt="" width="720" height="960">
       <div class="celular">
         <video id="video-topo" src="media/batalha.mp4" poster="media/batalha-capa.jpg" autoplay muted loop playsinline aria-label="Host da Live Plys recebendo presentes numa batalha ao vivo"></video>
         <span class="ao-vivo">AO VIVO</span>
         <button class="som" id="som" type="button" aria-pressed="false">Ativar som</button>
+      </div>
       </div>
     </div>
   </section>
@@ -313,6 +337,8 @@ form .botao { grid-column: 1 / -1; width: 100%; }
         <span class="pilula">O que você recebe</span>
         <h2>Você faz a live. <em>A gente acompanha.</em></h2>
       </div>
+      <div class="beneficios-bloco">
+      <figure class="foto-arco"><img src="media/live-ringlight.jpg" alt="Mulher ajustando o celular no ring light antes de entrar ao vivo" loading="lazy" width="720" height="960"></figure>
       <div class="beneficios">
         <div class="beneficio"><h3>Treino do zero</h3><p>Como abrir a live, segurar quem entra e transformar presente em constância.</p></div>
         <div class="beneficio"><h3>Olho nos números</h3><p>Conversa semanal sobre suas horas, dias e diamantes, com meta clara para o mês.</p></div>
@@ -320,6 +346,7 @@ form .botao { grid-column: 1 / -1; width: 100%; }
         <div class="beneficio"><h3>Bônus por metas</h3><p>Tabela de bônus em dólar para quem bate as metas mensais da agência.</p></div>
         <div class="beneficio"><h3>Prêmios e placas</h3><p>Kit de boas-vindas, ranking mensal e reconhecimento para quem se destaca.</p></div>
         <div class="beneficio"><h3>Suporte com o app</h3><p>Ajuda com regras, segurança da conta e problemas técnicos na plataforma.</p></div>
+      </div>
       </div>
     </div>
   </section>
@@ -333,9 +360,13 @@ form .botao { grid-column: 1 / -1; width: 100%; }
       </div>
       <div class="momentos">
         <figure class="momento"><img src="media/live-conversa.jpg" alt="Mulher conversando com o público em frente ao celular no tripé" loading="lazy" width="720" height="960"><figcaption><span class="pilula">Conversar</span></figcaption></figure>
+        <figure class="momento"><img src="media/live-asiatica.jpg" alt="Mulher rindo enquanto lê os comentários no celular" loading="lazy" width="720" height="960"><figcaption><span class="pilula">Ler os comentários</span></figcaption></figure>
+        <figure class="momento"><img src="media/live-loira.jpg" alt="Mulher apontando para a câmera e sorrindo" loading="lazy" width="720" height="960"><figcaption><span class="pilula">Chamar quem chega</span></figcaption></figure>
         <figure class="momento"><img src="media/live-presente.jpg" alt="Mulher surpresa com as mãos no rosto ao receber um presente" loading="lazy" width="720" height="960"><figcaption><span class="pilula">Receber presentes</span></figcaption></figure>
         <figure class="momento"><img src="media/live-batalha.jpg" alt="Mulher comemorando a vitória numa batalha" loading="lazy" width="720" height="960"><figcaption><span class="pilula">Vencer batalhas</span></figcaption></figure>
+        <figure class="momento"><img src="media/live-cacheada.jpg" alt="Mulher aplaudindo em frente ao celular no tripé" loading="lazy" width="720" height="960"><figcaption><span class="pilula">Comemorar juntas</span></figcaption></figure>
         <figure class="momento"><img src="media/live-coracao.jpg" alt="Mulher fazendo coração com as mãos para a câmera" loading="lazy" width="720" height="960"><figcaption><span class="pilula">Criar sua torcida</span></figcaption></figure>
+        <figure class="momento"><img src="media/live-ruiva-curta.jpg" alt="Mulher ruiva de jaqueta verde mandando beijo para a câmera" loading="lazy" width="720" height="960"><figcaption><span class="pilula">Ser você mesma</span></figcaption></figure>
       </div>
       <p class="nota">Imagens ilustrativas.</p>
     </div>
@@ -353,6 +384,7 @@ form .botao { grid-column: 1 / -1; width: 100%; }
           <li>Tempo para fazer live com frequência</li>
           <li>Celular e internet estável</li>
         </ul>
+        <figure class="foto-arco pequena"><img src="media/live-pensativa.jpg" alt="Mulher pensativa com a mão no queixo" loading="lazy" width="720" height="960"></figure>
       </div>
       <div class="faq" id="duvidas">
         <details><summary>Preciso pagar alguma coisa?</summary><p>Não. A inscrição e o acompanhamento são gratuitos, e a agência não fica com parte dos seus diamantes.</p></details>
@@ -371,6 +403,7 @@ form .botao { grid-column: 1 / -1; width: 100%; }
         <span class="pilula">Inscrição gratuita</span>
         <h2>Sua vaga começa <em>aqui</em></h2>
         <p>Preencha em menos de um minuto. Suas respostas vão direto para o nosso WhatsApp e a equipe te responde por lá.</p>
+        <figure class="foto-arco pequena"><img src="media/live-trancas.jpg" alt="Mulher sorrindo por cima do ombro ao lado do ring light" loading="lazy" width="720" height="960"></figure>
       </div>
       <form id="form-inscricao" novalidate>
         <div class="campo largo"><label for="nome">Seu nome</label><input id="nome" name="nome" autocomplete="given-name" placeholder="Como você gosta de ser chamada" required></div>
@@ -400,7 +433,7 @@ form .botao { grid-column: 1 / -1; width: 100%; }
       <a href="https://www.instagram.com/liveplysagency" target="_blank" rel="noopener">Instagram</a>
       <a href="https://wa.me/5511910980910" target="_blank" rel="noopener">WhatsApp</a>
     </nav>
-    <p class="legal">Live Plys Agency é uma agência parceira aprovada pelo TikTok LIVE. TikTok é marca de seus respectivos donos. Para fazer live com presentes é preciso ter 18 anos ou mais.</p>
+    <p class="legal">Live Plys Agency é uma agência parceira aprovada pelo TikTok LIVE. TikTok é marca de seus respectivos donos. Para fazer live com presentes é preciso ter 18 anos ou mais. As fotos de pessoas fora das seções de vídeos e resultados são ilustrativas.</p>
   </div>
 </footer>
 
