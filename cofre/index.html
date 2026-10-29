@@ -1,0 +1,568 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#0b1120"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<title>Cofre dos Sonhos</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: app de uma coluna para celular, abas fixas embaixo; noite de inverno, luxo discreto. Visual único escuro, por escolha. */
+:root{
+  --bg:#0b1120; --bg2:#111a2e; --card:#16213a; --line:#25324f;
+  --fg:#eef2f8; --muted:#9aa7bf; --gold:#d9b779; --gold-ink:#1b1408;
+  --ice:#9fd0f0; --good:#7fd6a4; --bad:#f08f8f;
+  --display:"DM Serif Display", Georgia, "Times New Roman", serif;
+  --body:"Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--fg)}
+body{font-family:var(--body);font-size:15px;line-height:1.5;margin:0;
+  padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px));
+  padding-block:0 calc(88px + env(safe-area-inset-bottom,0px))}
+.wrap{max-width:560px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;letter-spacing:.2px}
+h1{font-size:30px;line-height:1.1}
+h2{font-size:24px}
+h3{font-size:19px}
+.eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.muted{color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+header.top{padding-block:20px 8px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{display:flex;flex-direction:column;gap:2px}
+.brand small{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.save-state{font-size:12px;color:var(--muted);text-align:right}
+.banner{background:var(--bg2);border:1px dashed var(--line);border-radius:12px;padding:12px 14px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-block:8px 4px;font-size:13.5px}
+section.view{display:flex;flex-direction:column;gap:18px;padding-block:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.quote{font-family:var(--display);font-style:italic;font-size:22px;line-height:1.3;color:var(--fg)}
+.quote-card{background:linear-gradient(160deg,var(--bg2),var(--card));}
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.stat b{font-family:var(--display);font-weight:400;font-size:24px}
+.stat span{font-size:12px;color:var(--muted)}
+.dream{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--card);display:flex;flex-direction:column}
+.dream .scene{position:relative;aspect-ratio:16/9;max-width:100%;background:var(--bg2)}
+.dream .scene img{width:100%;height:100%;object-fit:cover;display:block}
+.dream .scene .tag{position:absolute;left:12px;top:12px;background:rgba(11,17,32,.72);color:var(--fg);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:4px 8px;border-radius:999px}
+.dream .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px}
+.bar{height:8px;background:var(--bg);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),#f1dcae);border-radius:999px;transition:width .5s ease}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.tight{display:flex;gap:8px;flex-wrap:wrap}
+button,.btn{font:inherit;font-weight:600;font-size:14px;border-radius:999px;padding:10px 16px;border:1px solid var(--line);background:var(--bg2);color:var(--fg);cursor:pointer}
+button.primary{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
+button.ghost{background:transparent}
+button.small{padding:6px 12px;font-size:13px}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ice);outline-offset:2px}
+button:disabled{opacity:.5;cursor:default}
+form{display:flex;flex-direction:column;gap:10px}
+label{font-size:12.5px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+input,select{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.scenes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.scenes button{padding:0;border-radius:10px;overflow:hidden;aspect-ratio:1;position:relative;border:2px solid transparent}
+.scenes button img{width:100%;height:100%;object-fit:cover;display:block}
+.scenes button span{position:absolute;bottom:4px;left:0;right:0;font-size:11px;text-align:center;color:#fff;text-shadow:0 1px 3px #000}
+.scenes button[aria-pressed="true"]{border-color:var(--gold)}
+ul.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+ul.list li{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+ul.list li:last-child{border-bottom:0}
+.in{color:var(--good)} .out{color:var(--bad)}
+.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:6px}
+.chips button{padding:8px 0;border-radius:10px;font-size:12px;font-weight:600;background:var(--bg);border:1px solid var(--line);color:var(--muted)}
+.chips button[aria-pressed="true"]{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
+.note{font-size:12.5px;color:var(--muted);line-height:1.45}
+.insight{background:var(--bg2);border-left:3px solid var(--gold);border-radius:8px;padding:10px 12px;font-size:13.5px}
+canvas.chart{width:100%;height:180px;display:block}
+.wp-wrap{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.wp-wrap canvas{width:180px;max-width:100%;aspect-ratio:9/16;border-radius:14px;border:1px solid var(--line);background:var(--bg2)}
+.wp-side{flex:1;min-width:200px;display:flex;flex-direction:column;gap:10px}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:rgba(11,17,32,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);
+  padding:8px max(8px, env(safe-area-inset-left,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(8px, env(safe-area-inset-right,0px));z-index:20}
+nav.tabs .in-nav{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+nav.tabs button{background:transparent;border:0;border-radius:10px;padding:6px 2px;font-size:11.5px;font-weight:600;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px}
+nav.tabs button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6}
+nav.tabs button[aria-current="page"]{color:var(--gold)}
+.sheet-bg{position:fixed;inset:0;background:rgba(3,6,14,.6);z-index:30;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--bg2);border:1px solid var(--line);border-radius:18px 18px 0 0;width:100%;max-width:560px;max-height:88vh;overflow:auto;
+  padding:18px max(16px, env(safe-area-inset-left,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(16px, env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:12px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;z-index:40}
+.empty{padding:20px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><small>Inspira Diário</small><h1>Cofre dos Sonhos</h1></div>
+    <div class="save-state" id="saveState">Carregando…</div>
+  </header>
+  <div class="banner" id="sampleBanner" hidden>
+    <span>Você está vendo <b>dados de exemplo</b>. Explore à vontade e depois comece os seus.</span>
+    <button class="small primary" id="btnReset">Começar do zero</button>
+  </div>
+
+  <!-- INÍCIO -->
+  <section class="view" id="v-inicio">
+    <div class="card quote-card">
+      <span class="eyebrow">Frase do dia</span>
+      <p class="quote" id="quote" style="margin:0"></p>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><span>Total nos cofres</span><b class="num" id="stTotal">R$ 0</b></div>
+      <div class="stat"><span>Sobrou este mês</span><b class="num" id="stMes">R$ 0</b></div>
+    </div>
+    <div id="destaque"></div>
+    <div class="card">
+      <h3>Desafio em andamento</h3>
+      <div id="desafioResumo" class="muted"></div>
+    </div>
+  </section>
+
+  <!-- COFRES -->
+  <section class="view" id="v-cofres" hidden>
+    <div class="row"><h2>Seus cofres</h2><button class="primary small" id="btnNovoCofre">+ Novo sonho</button></div>
+    <div id="cofresList" style="display:flex;flex-direction:column;gap:16px"></div>
+  </section>
+
+  <!-- GASTOS -->
+  <section class="view" id="v-gastos" hidden>
+    <h2>Entradas e saídas</h2>
+    <div class="card">
+      <form id="fMov">
+        <div class="grid2">
+          <label for="movTipo">Tipo<select id="movTipo"><option value="saida">Saída</option><option value="entrada">Entrada</option></select></label>
+          <label for="movValor">Valor (R$)<input id="movValor" type="number" inputmode="decimal" min="0.01" step="0.01" required placeholder="0,00"></label>
+        </div>
+        <div class="grid2">
+          <label for="movCat">Categoria<select id="movCat"></select></label>
+          <label for="movDesc">Descrição<input id="movDesc" type="text" maxlength="40" placeholder="Ex.: delivery"></label>
+        </div>
+        <button class="primary" type="submit">Registrar</button>
+      </form>
+      <div class="insight" id="movInsight" hidden></div>
+    </div>
+    <div class="card">
+      <div class="row"><h3 id="mesTitulo">Este mês</h3><span class="num muted" id="mesSaldo"></span></div>
+      <div id="catResumo" style="display:flex;flex-direction:column;gap:8px"></div>
+    </div>
+    <div class="card">
+      <h3>Últimos lançamentos</h3>
+      <ul class="list" id="movList"></ul>
+    </div>
+  </section>
+
+  <!-- DESAFIOS -->
+  <section class="view" id="v-desafios" hidden>
+    <h2>Desafios de disciplina</h2>
+    <div class="card">
+      <div class="row"><h3>52 semanas</h3><span class="num muted" id="d52Total"></span></div>
+      <p class="note" style="margin:0">Na semana 1 você guarda 1× o valor base, na semana 2 guarda 2×, e assim por diante até a semana 52. Toque na semana quando guardar.</p>
+      <label for="d52Base" style="max-width:200px">Valor base (R$)<input id="d52Base" type="number" min="1" step="1"></label>
+      <div class="bar"><i id="d52Bar" style="width:0"></i></div>
+      <div class="chips" id="d52Chips"></div>
+    </div>
+    <div class="card">
+      <div class="row"><h3>30 dias sem gasto bobo</h3><span class="num muted" id="d30Total"></span></div>
+      <p class="note" style="margin:0">Marque cada dia em que você não gastou com impulso: delivery por preguiça, compra que não estava no plano, assinatura esquecida.</p>
+      <div class="chips" id="d30Chips"></div>
+    </div>
+  </section>
+
+  <!-- SIMULADOR -->
+  <section class="view" id="v-sim" hidden>
+    <h2>Seu dinheiro trabalhando</h2>
+    <div class="card">
+      <div class="grid2">
+        <label for="simInicial">Já tenho (R$)<input id="simInicial" type="number" min="0" step="10" value="1000"></label>
+        <label for="simMensal">Guardo por mês (R$)<input id="simMensal" type="number" min="0" step="10" value="300"></label>
+      </div>
+      <div class="grid2">
+        <label for="simAnos">Por quantos anos<input id="simAnos" type="number" min="1" max="40" step="1" value="5"></label>
+        <label for="simTaxa">Rendimento ao ano (%)<input id="simTaxa" type="number" min="0" max="40" step="0.1" value="10"></label>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><span>Você terá</span><b class="num" id="simFinal">R$ 0</b></div>
+        <div class="stat"><span>Só de rendimento</span><b class="num" id="simJuros">R$ 0</b></div>
+      </div>
+      <canvas class="chart" id="simChart" aria-label="Gráfico do dinheiro guardado e dos juros ao longo dos anos" role="img"></canvas>
+      <div class="row note" style="justify-content:flex-start;gap:16px"><span><b style="color:var(--muted)">■</b> o que você guardou</span><span><b style="color:var(--gold)">■</b> total com rendimento</span></div>
+      <p class="note" style="margin:0">Simulação educativa com uma taxa fixa que você escolhe. Rendimentos reais mudam com o tempo e com o tipo de aplicação; confira as taxas atuais antes de decidir. Isto não é recomendação de investimento.</p>
+    </div>
+    <div class="card">
+      <h3>Para entender antes de investir</h3>
+      <ul class="list">
+        <li><span><b>Reserva de emergência:</b> o primeiro cofre. Cobre de 3 a 6 meses do seu custo de vida e fica onde você saca rápido.</span></li>
+        <li><span><b>Juros compostos:</b> o rendimento passa a render também. Por isso tempo pesa mais que valor.</span></li>
+        <li><span><b>Liquidez:</b> quanto tempo leva para o dinheiro voltar para a sua mão.</span></li>
+        <li><span><b>Risco:</b> quanto maior a promessa de ganho, maior a chance de perder. Desconfie de retorno garantido alto.</span></li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<nav class="tabs" aria-label="Seções">
+  <div class="in-nav">
+    <button data-tab="inicio" aria-current="page"><svg viewBox="0 0 24 24"><path d="M4 11l8-6 8 6v8a1 1 0 0 1-1 1h-4v-5h-6v5H5a1 1 0 0 1-1-1z"/></svg>Início</button>
+    <button data-tab="cofres"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="2"/><circle cx="12" cy="12.5" r="3"/><path d="M12 9.5v-1M7 20v1.5M17 20v1.5"/></svg>Cofres</button>
+    <button data-tab="gastos"><svg viewBox="0 0 24 24"><path d="M4 17l5-5 4 3 7-8"/><path d="M15 7h5v5"/></svg>Gastos</button>
+    <button data-tab="desafios"><svg viewBox="0 0 24 24"><path d="M8 4h8v4a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 12v4M9 20h6"/></svg>Desafios</button>
+    <button data-tab="sim"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V6M16 20v-8M22 20H2"/></svg>Simulador</button>
+  </div>
+</nav>
+
+<div id="sheetHost"></div>
+<div id="toastHost"></div>
+
+<script>
+(() => {
+  // ---------- utilidades ----------
+  const $ = s => document.querySelector(s);
+  const brl = v => (Number(v)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits: (Math.abs(v)%1 ? 2 : 0)});
+  const uid = () => Math.random().toString(36).slice(2,10);
+  const hoje = () => new Date().toISOString().slice(0,10);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function toast(msg){ const t=document.createElement('div'); t.className='toast'; t.textContent=msg; $('#toastHost').append(t); setTimeout(()=>t.remove(),2200); }
+
+  const FRASES = [
+    'Rico não é quem ganha muito. É quem não abandona o próprio cofre.',
+    'O sonho não chega de uma vez. Ele chega em depósitos.',
+    'Cada real que você não gasta à toa é um passo dentro do seu sonho.',
+    'Disciplina é lembrar do que você quer de verdade na hora em que dá vontade de gastar.',
+    'Você não está se privando. Está escolhendo o que importa.',
+    'Quem guarda pouco todo mês vence quem guarda muito uma vez.',
+    'O frio da montanha começa com o primeiro depósito.',
+    'Seu futuro está sendo pago hoje. Escolha bem o que você compra.',
+    'Não espere sobrar para guardar. Guarde para que sobre.',
+    'Liberdade financeira é silêncio: ninguém vê, mas você sente.',
+    'O delivery passa. O sonho fica.',
+    'Pequenos valores, grande constância, resultado inevitável.',
+    'Você não precisa de sorte. Precisa de um plano e de não desistir dele.',
+    'Quem controla o dinheiro controla as próprias escolhas.',
+    'O caminho do sonho é feito de "nãos" para as coisas pequenas.',
+    'Todo grande patrimônio começou com alguém que decidiu guardar o primeiro real.',
+    'O sonho fica mais perto toda vez que você abre o cofre para colocar, e não para tirar.',
+    'Ambição sem plano é só vontade. Com plano, vira data marcada.',
+    'Hoje você economiza. Amanhã você escolhe.',
+    'Ninguém vai sonhar o seu sonho por você. Nem pagar por ele.'
+  ];
+  const fraseDoDia = () => { const d=new Date(); const n=Math.floor((d - new Date(d.getFullYear(),0,0))/864e5); return FRASES[n % FRASES.length]; };
+
+  const CATS = {saida:['Mercado','Moradia','Transporte','Delivery e lazer','Compras','Contas','Outros'], entrada:['Salário','Renda extra','Presente','Outros']};
+  const CENAS = {neve:'Neve', mar:'Mar', cidade:'Cidade', estrada:'Estrada'};
+
+  // ---------- cenas desenhadas ----------
+  function rng(seed){ let s=seed>>>0 || 1; return () => (s = (s*1664525 + 1013904223)>>>0) / 4294967296; }
+  function drawScene(ctx, w, h, cena){
+    const r = rng({neve:7,mar:13,cidade:21,estrada:34}[cena]||5);
+    const g = ctx.createLinearGradient(0,0,0,h);
+    if (cena==='mar'){ g.addColorStop(0,'#1d1b3f'); g.addColorStop(.45,'#c4627a'); g.addColorStop(.62,'#f2b36b'); g.addColorStop(.63,'#244a6b'); g.addColorStop(1,'#0c1a2b'); }
+    else if (cena==='cidade'){ g.addColorStop(0,'#05070f'); g.addColorStop(.6,'#1a2140'); g.addColorStop(1,'#2b2346'); }
+    else if (cena==='estrada'){ g.addColorStop(0,'#1a1430'); g.addColorStop(.5,'#c5734f'); g.addColorStop(.62,'#e9b27a'); g.addColorStop(1,'#2a1d1a'); }
+    else { g.addColorStop(0,'#070b1c'); g.addColorStop(.55,'#22305a'); g.addColorStop(1,'#6b7fae'); }
+    ctx.fillStyle=g; ctx.fillRect(0,0,w,h);
+    // estrelas
+    if (cena!=='mar'){ ctx.fillStyle='rgba(255,255,255,.85)'; for(let i=0;i<Math.round(w*h/9000);i++){ const x=r()*w, y=r()*h*.5, s=r()*1.6*(w/600)+.3; ctx.globalAlpha=.3+r()*.7; ctx.fillRect(x,y,s,s);} ctx.globalAlpha=1; }
+    if (cena==='neve'){
+      const mx=w*.72, my=h*.2, mr=w*.07; const mg=ctx.createRadialGradient(mx,my,0,mx,my,mr*4); mg.addColorStop(0,'rgba(240,244,255,.9)'); mg.addColorStop(.25,'rgba(200,215,255,.25)'); mg.addColorStop(1,'rgba(200,215,255,0)'); ctx.fillStyle=mg; ctx.fillRect(0,0,w,h);
+      ctx.fillStyle='#eef2ff'; ctx.beginPath(); ctx.arc(mx,my,mr*.6,0,Math.PI*2); ctx.fill();
+      const layers=[['#2d3a63',.55,.42],['#1d2747',.68,.3],['#121a33',.82,.22]];
+      layers.forEach(([c,base,amp],li)=>{ const top=h*(base-amp*.6), lg=ctx.createLinearGradient(0,top,0,h*base);
+        lg.addColorStop(0, li===0?'#dfe7fb':li===1?'#9fb0d6':c); lg.addColorStop(li===2?0:.35, c); lg.addColorStop(1, c);
+        ctx.fillStyle=lg; ctx.beginPath(); ctx.moveTo(0,h); let x=0; const pts=[]; while(x<=w){ const y=h*base - r()*h*amp*.6; pts.push([x,y]); x+=w*(.12+r()*.14);} pts.push([w,h*base]); pts.forEach(([px,py])=>ctx.lineTo(px,py)); ctx.lineTo(w,h); ctx.closePath(); ctx.fill(); });
+      ctx.fillStyle='rgba(255,255,255,.8)'; for(let i=0;i<Math.round(w*h/5000);i++){ const s=(r()*2+.6)*(w/600); ctx.beginPath(); ctx.arc(r()*w,r()*h,s,0,Math.PI*2); ctx.fill(); }
+    } else if (cena==='mar'){
+      const sx=w*.5, sy=h*.6; const sg=ctx.createRadialGradient(sx,sy,0,sx,sy,w*.4); sg.addColorStop(0,'rgba(255,220,150,.9)'); sg.addColorStop(1,'rgba(255,180,120,0)'); ctx.fillStyle=sg; ctx.fillRect(0,0,w,h);
+      ctx.fillStyle='#ffd99a'; ctx.beginPath(); ctx.arc(sx,sy,w*.07,Math.PI,0); ctx.fill();
+      ctx.strokeStyle='rgba(255,210,150,.55)'; for(let i=0;i<26;i++){ const y=h*.64+i*h*.013; const half=w*(.1+r()*.12)*(1-i/40); ctx.lineWidth=Math.max(1,w/500); ctx.beginPath(); ctx.moveTo(sx-half+r()*20,y); ctx.lineTo(sx+half-r()*20,y); ctx.stroke(); }
+      ctx.fillStyle='#0a1422'; ctx.beginPath(); ctx.moveTo(0,h*.63); ctx.quadraticCurveTo(w*.12,h*.55,w*.24,h*.63); ctx.fill();
+    } else if (cena==='cidade'){
+      let x=0; while(x<w){ const bw=w*(.05+r()*.07), bh=h*(.2+r()*.45); const y=h-bh; ctx.fillStyle=['#0d1226','#111832','#151d3a'][Math.floor(r()*3)]; ctx.fillRect(x,y,bw,bh);
+        for(let wy=y+h*.02; wy<h-h*.02; wy+=h*.03){ for(let wx=x+bw*.15; wx<x+bw*.85; wx+=bw*.22){ if(r()<.45){ ctx.fillStyle=r()<.8?'rgba(255,214,140,.85)':'rgba(170,210,255,.8)'; ctx.fillRect(wx,wy,bw*.1,h*.012);} } }
+        x+=bw+w*.004; }
+      const hz=ctx.createLinearGradient(0,h*.6,0,h); hz.addColorStop(0,'rgba(217,183,121,0)'); hz.addColorStop(1,'rgba(217,183,121,.18)'); ctx.fillStyle=hz; ctx.fillRect(0,h*.6,w,h*.4);
+    } else {
+      ctx.fillStyle='#4a2c3a'; ctx.beginPath(); ctx.moveTo(0,h*.62); for(let x=0;x<=w;x+=w*.1){ ctx.lineTo(x,h*.62 - r()*h*.12);} ctx.lineTo(w,h*.62); ctx.closePath(); ctx.fill();
+      ctx.fillStyle='#2a1a1c'; ctx.fillRect(0,h*.62,w,h*.38);
+      ctx.fillStyle='#16101a'; ctx.beginPath(); ctx.moveTo(w*.49,h*.62); ctx.lineTo(w*.51,h*.62); ctx.lineTo(w*.85,h); ctx.lineTo(w*.15,h); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle='#f0d29a'; ctx.lineWidth=Math.max(1.5,w/260); ctx.setLineDash([h*.03,h*.03]); ctx.beginPath(); ctx.moveTo(w*.5,h*.63); ctx.lineTo(w*.5,h); ctx.stroke(); ctx.setLineDash([]);
+    }
+  }
+  const sceneCache = {};
+  function sceneURL(cena){ if(sceneCache[cena]) return sceneCache[cena]; const c=document.createElement('canvas'); c.width=640; c.height=360; drawScene(c.getContext('2d'),640,360,cena); return sceneCache[cena]=c.toDataURL('image/jpeg',.82); }
+
+  // ---------- estado ----------
+  function exemplo(){
+    const d=new Date(); const ym=d.toISOString().slice(0,7);
+    const plus = m => { const x=new Date(d); x.setMonth(x.getMonth()+m); return x.toISOString().slice(0,10); };
+    return { exemplo:true,
+      cofres:[
+        {id:'c1', nome:'Viagem para a neve', meta:18000, guardado:6300, data:plus(14), cena:'neve'},
+        {id:'c2', nome:'Reserva de liberdade', meta:12000, guardado:7800, data:plus(10), cena:'cidade'},
+        {id:'c3', nome:'Meu primeiro carro', meta:45000, guardado:4200, data:plus(30), cena:'estrada'}
+      ],
+      movs:[
+        {id:uid(), tipo:'entrada', valor:3200, cat:'Salário', desc:'Salário', data:ym+'-05'},
+        {id:uid(), tipo:'entrada', valor:450, cat:'Renda extra', desc:'Freela', data:ym+'-12'},
+        {id:uid(), tipo:'saida', valor:1100, cat:'Moradia', desc:'Aluguel', data:ym+'-06'},
+        {id:uid(), tipo:'saida', valor:620, cat:'Mercado', desc:'Compras do mês', data:ym+'-08'},
+        {id:uid(), tipo:'saida', valor:210, cat:'Delivery e lazer', desc:'Delivery', data:ym+'-14'},
+        {id:uid(), tipo:'saida', valor:180, cat:'Transporte', desc:'Combustível', data:ym+'-15'}
+      ],
+      d52:{base:5, done:[1,2,3,4,5,6,7,8,9,10]}, d30:[1,2,3,5,6,7,8,9]
+    };
+  }
+  const vazio = () => ({exemplo:false, cofres:[], movs:[], d52:{base:5, done:[]}, d30:[]});
+  let S = exemplo();
+  const imgs = {}; // cofreId -> dataURL de foto enviada
+
+  // ---------- persistência ----------
+  let db=null, uidUser=null, saveTimer=null;
+  function setSaveState(t){ $('#saveState').textContent=t; }
+  function lsGet(k){ try{ return localStorage.getItem(k);}catch(e){ return null; } }
+  function lsSet(k,v){ try{ localStorage.setItem(k,v);}catch(e){} }
+  function persist(){
+    clearTimeout(saveTimer);
+    saveTimer=setTimeout(async ()=>{
+      const body={estado:JSON.stringify(S), atualizado:new Date().toISOString()};
+      lsSet('cofre-estado', body.estado);
+      if(db && uidUser){
+        try{ await db.doc('data/users/'+uidUser+'/estado').set(body); setSaveState('Salvo na sua conta'); }
+        catch(e){ setSaveState(e && e.code==='quota_exceeded' ? 'Sem espaço para salvar' : 'Salvo só neste aparelho'); }
+      } else setSaveState('Salvo só neste aparelho');
+    }, 500);
+  }
+  async function saveImg(id, src){
+    imgs[id]=src;
+    if(db && uidUser){ try{ await db.doc('data/users/'+uidUser+'/img-'+id).set({src}); }catch(e){ toast('Não deu para salvar a foto na conta'); } }
+    else lsSet('cofre-img-'+id, src);
+  }
+  async function delImg(id){
+    delete imgs[id];
+    if(db && uidUser){ try{ await db.doc('data/users/'+uidUser+'/img-'+id).delete(); }catch(e){} }
+  }
+  async function loadImgs(){
+    for(const c of S.cofres){ if(!c.foto) continue;
+      if(db && uidUser){ try{ const sn=await db.doc('data/users/'+uidUser+'/img-'+c.id).get(); if(sn.exists) imgs[c.id]=sn.data().src; }catch(e){} }
+      else { const v=lsGet('cofre-img-'+c.id); if(v) imgs[c.id]=v; } }
+    renderAll();
+  }
+  async function boot(){
+    const local=lsGet('cofre-estado'); if(local){ try{ S=JSON.parse(local); }catch(e){} }
+    renderAll(); setSaveState(local ? 'Salvo só neste aparelho' : 'Exemplo');
+    try{
+      const [d,u]=await Promise.all([window.claude?.use?.('db'), window.claude?.use?.('user')]);
+      if(d && u){ const id=await u.id(); if(id){ db=d; uidUser=id;
+        const sn=await db.doc('data/users/'+id+'/estado').get();
+        if(sn.exists){ try{ S=JSON.parse(sn.data().estado); }catch(e){} setSaveState('Salvo na sua conta'); }
+        else setSaveState(S.exemplo ? 'Exemplo' : 'Salvo só neste aparelho');
+        renderAll(); } }
+    }catch(e){ /* segue só no aparelho */ }
+    loadImgs();
+  }
+
+  // ---------- cálculos ----------
+  const mesAtual = () => new Date().toISOString().slice(0,7);
+  function resumoMes(){ const ym=mesAtual(); let ent=0, sai=0; const cats={};
+    S.movs.filter(m=>m.data.startsWith(ym)).forEach(m=>{ if(m.tipo==='entrada') ent+=m.valor; else { sai+=m.valor; cats[m.cat]=(cats[m.cat]||0)+m.valor; } });
+    return {ent,sai,saldo:ent-sai,cats}; }
+  function mesesAte(data){ const a=new Date(), b=new Date(data+'T12:00:00'); return Math.max(1,(b.getFullYear()-a.getFullYear())*12 + (b.getMonth()-a.getMonth())); }
+  function porMes(c){ return Math.max(0, (c.meta-c.guardado)/mesesAte(c.data)); }
+  const pct = c => Math.min(100, Math.round(c.guardado/c.meta*100)||0);
+  const sceneSrc = c => imgs[c.id] || sceneURL(c.cena||'neve');
+
+  // ---------- render ----------
+  function dreamCard(c, destaque){
+    const falta=Math.max(0,c.meta-c.guardado); const p=pct(c);
+    const pm = porMes(c);
+    return `<article class="dream">
+      <div class="scene"><img alt="Imagem do sonho ${esc(c.nome)}" src="${sceneSrc(c)}"><span class="tag">${destaque?'Sonho em destaque':p+'% conquistado'}</span></div>
+      <div class="body">
+        <div class="row"><h3>${esc(c.nome)}</h3><span class="num muted">${p}%</span></div>
+        <div class="bar"><i style="width:${p}%"></i></div>
+        <div class="row num" style="font-size:13.5px"><span>${brl(c.guardado)} de ${brl(c.meta)}</span><span class="muted">faltam ${brl(falta)}</span></div>
+        ${falta>0 ? `<p class="note" style="margin:0">Guardando <b style="color:var(--fg)">${brl(Math.ceil(pm))} por mês</b>, você chega lá em ${new Date(c.data+'T12:00:00').toLocaleDateString('pt-BR',{month:'long',year:'numeric'})}.</p>` : `<p class="note" style="margin:0;color:var(--good)">Sonho conquistado. Agora é viver.</p>`}
+        <div class="tight">
+          <button class="primary small" data-act="guardar" data-id="${c.id}">Guardar</button>
+          <button class="small" data-act="wallpaper" data-id="${c.id}">Wallpaper do sonho</button>
+          ${destaque?'':`<button class="small ghost" data-act="retirar" data-id="${c.id}">Retirar</button><button class="small ghost" data-act="editar" data-id="${c.id}">Editar</button>`}
+        </div>
+      </div></article>`;
+  }
+  function renderInicio(){
+    $('#quote').textContent = fraseDoDia();
+    const total=S.cofres.reduce((a,c)=>a+c.guardado,0); $('#stTotal').textContent=brl(total);
+    const r=resumoMes(); const el=$('#stMes'); el.textContent=brl(r.saldo); el.style.color = r.saldo<0?'var(--bad)':'';
+    const top=[...S.cofres].filter(c=>c.guardado<c.meta).sort((a,b)=>pct(b)-pct(a))[0] || S.cofres[0];
+    $('#destaque').innerHTML = top ? dreamCard(top,true) : `<div class="empty">Nenhum sonho ainda. <br><button class="primary small" style="margin-top:10px" data-act="novo">Criar meu primeiro cofre</button></div>`;
+    const feitos=S.d52.done.length; const guardado=S.d52.done.reduce((a,w)=>a+w*S.d52.base,0);
+    $('#desafioResumo').innerHTML = `52 semanas: <b style="color:var(--fg)">${feitos} de 52</b> semanas, ${brl(guardado)} guardados. <br>30 dias sem gasto bobo: <b style="color:var(--fg)">${S.d30.length} de 30</b> dias.`;
+  }
+  function renderCofres(){
+    $('#cofresList').innerHTML = S.cofres.length ? S.cofres.map(c=>dreamCard(c,false)).join('') : `<div class="empty">Crie um cofre para cada sonho: a viagem, o carro, a reserva. Cada um com sua imagem e sua data.</div>`;
+  }
+  function renderGastos(){
+    const tipo=$('#movTipo').value; const sel=$('#movCat'); const cur=sel.value;
+    sel.innerHTML=CATS[tipo].map(c=>`<option>${c}</option>`).join(''); if(CATS[tipo].includes(cur)) sel.value=cur;
+    const r=resumoMes();
+    $('#mesTitulo').textContent = new Date().toLocaleDateString('pt-BR',{month:'long',year:'numeric'}).replace(/^./,m=>m.toUpperCase());
+    $('#mesSaldo').innerHTML = `<span class="in">+${brl(r.ent)}</span> · <span class="out">−${brl(r.sai)}</span>`;
+    const max=Math.max(1,...Object.values(r.cats));
+    $('#catResumo').innerHTML = Object.keys(r.cats).length ? Object.entries(r.cats).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div><div class="row num" style="font-size:13.5px"><span>${esc(k)}</span><span>${brl(v)}</span></div><div class="bar" style="height:6px"><i style="width:${v/max*100}%;background:var(--ice)"></i></div></div>`).join('') : `<p class="muted" style="margin:0">Nenhuma saída registrada este mês.</p>`;
+    const list=[...S.movs].sort((a,b)=>b.data.localeCompare(a.data)).slice(0,12);
+    $('#movList').innerHTML = list.length ? list.map(m=>`<li><span>${esc(m.desc||m.cat)}<br><small class="muted">${esc(m.cat)} · ${new Date(m.data+'T12:00:00').toLocaleDateString('pt-BR')}</small></span><span class="num ${m.tipo==='entrada'?'in':'out'}" style="display:flex;gap:10px;align-items:center">${m.tipo==='entrada'?'+':'−'}${brl(m.valor)}<button class="small ghost" aria-label="Apagar lançamento" data-act="delmov" data-id="${m.id}">×</button></span></li>`).join('') : `<li class="muted">Nada lançado ainda.</li>`;
+  }
+  function renderDesafios(){
+    const b=S.d52.base; $('#d52Base').value=b;
+    const total=52*53/2*b, feito=S.d52.done.reduce((a,w)=>a+w*b,0);
+    $('#d52Total').textContent=`${brl(feito)} de ${brl(total)}`; $('#d52Bar').style.width=(feito/total*100)+'%';
+    $('#d52Chips').innerHTML=Array.from({length:52},(_,i)=>i+1).map(w=>`<button aria-pressed="${S.d52.done.includes(w)}" data-act="d52" data-w="${w}" title="Semana ${w}: ${brl(w*b)}">${brl(w*b)}</button>`).join('');
+    $('#d30Total').textContent=`${S.d30.length} de 30 dias`;
+    $('#d30Chips').innerHTML=Array.from({length:30},(_,i)=>i+1).map(d=>`<button aria-pressed="${S.d30.includes(d)}" data-act="d30" data-d="${d}">Dia ${d}</button>`).join('');
+  }
+  function renderSim(){
+    const ini=+$('#simInicial').value||0, men=+$('#simMensal').value||0, anos=Math.min(40,Math.max(1,+$('#simAnos').value||1)), taxa=+$('#simTaxa').value||0;
+    const im=Math.pow(1+taxa/100,1/12)-1; let v=ini; const pts=[{inv:ini,tot:ini}];
+    for(let m=1;m<=anos*12;m++){ v=v*(1+im)+men; if(m%12===0) pts.push({inv:ini+men*m, tot:v}); }
+    const fim=pts[pts.length-1]; $('#simFinal').textContent=brl(Math.round(fim.tot)); $('#simJuros').textContent=brl(Math.round(fim.tot-fim.inv));
+    const cv=$('#simChart'); const dpr=window.devicePixelRatio||1; const W=cv.clientWidth||320, H=180; cv.width=W*dpr; cv.height=H*dpr;
+    const ctx=cv.getContext('2d'); ctx.scale(dpr,dpr); ctx.clearRect(0,0,W,H);
+    const cs=getComputedStyle(document.documentElement); const col=n=>cs.getPropertyValue(n).trim();
+    const L=8,R=W-8,T=14,B=H-22; const max=Math.max(1,...pts.map(p=>p.tot)); const X=i=>L+(R-L)*i/(pts.length-1||1), Y=v=>B-(B-T)*v/max;
+    ctx.strokeStyle=col('--line'); ctx.lineWidth=1; [0,.5,1].forEach(f=>{ ctx.beginPath(); ctx.moveTo(L,Y(max*f)); ctx.lineTo(R,Y(max*f)); ctx.stroke(); });
+    const area=(key,stroke,fill)=>{ ctx.beginPath(); pts.forEach((p,i)=>i?ctx.lineTo(X(i),Y(p[key])):ctx.moveTo(X(i),Y(p[key]))); ctx.strokeStyle=stroke; ctx.lineWidth=2; ctx.stroke(); ctx.lineTo(X(pts.length-1),B); ctx.lineTo(X(0),B); ctx.closePath(); ctx.fillStyle=fill; ctx.fill(); };
+    area('tot',col('--gold'),'rgba(217,183,121,.16)'); area('inv',col('--muted'),'rgba(154,167,191,.12)');
+    ctx.fillStyle=col('--gold'); ctx.beginPath(); ctx.arc(X(pts.length-1),Y(fim.tot),4,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle=col('--muted'); ctx.font='11px Manrope, sans-serif'; ctx.textAlign='left'; ctx.fillText('hoje',L,H-6); ctx.textAlign='right'; ctx.fillText(anos+(anos>1?' anos':' ano'),R,H-6);
+  }
+  function renderAll(){ $('#sampleBanner').hidden=!S.exemplo; renderInicio(); renderCofres(); renderGastos(); renderDesafios(); renderSim(); }
+
+  // ---------- abas ----------
+  function show(tab){ document.querySelectorAll('section.view').forEach(s=>s.hidden = s.id!=='v-'+tab);
+    document.querySelectorAll('nav.tabs button').forEach(b=>{ if(b.dataset.tab===tab) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+    if(tab==='sim') renderSim(); window.scrollTo(0,0); try{ sessionStorage.setItem('cofre-tab',tab);}catch(e){} }
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));
+
+  // ---------- painéis ----------
+  function sheet(html, onMount){ const bg=document.createElement('div'); bg.className='sheet-bg'; bg.innerHTML=`<div class="sheet" role="dialog" aria-modal="true">${html}</div>`;
+    bg.addEventListener('click',e=>{ if(e.target===bg) bg.remove(); }); $('#sheetHost').append(bg); onMount && onMount(bg.firstElementChild, ()=>bg.remove()); const f=bg.querySelector('input,button'); f&&f.focus(); }
+  function sairDoExemplo(){ if(S.exemplo){ S=vazio(); } }
+
+  function formCofre(c){
+    const ed=!!c; c=c||{nome:'',meta:'',guardado:0,data:new Date(Date.now()+365*864e5).toISOString().slice(0,10),cena:'neve'};
+    let cena=c.cena||'neve', foto=imgs[c.id]||null;
+    sheet(`<h2>${ed?'Editar sonho':'Novo sonho'}</h2>
+      <form id="fCofre">
+        <label for="cfNome">Qual é o sonho?<input id="cfNome" required maxlength="40" value="${esc(c.nome)}" placeholder="Ex.: Viagem para a neve"></label>
+        <div class="grid2"><label for="cfMeta">Quanto custa (R$)<input id="cfMeta" type="number" min="1" step="1" required value="${c.meta}"></label>
+        <label for="cfData">Até quando<input id="cfData" type="date" required value="${c.data}"></label></div>
+        ${ed?'':`<label for="cfIni">Já tenho guardado (R$)<input id="cfIni" type="number" min="0" step="1" value="0"></label>`}
+        <span class="eyebrow">Imagem do sonho</span>
+        <div class="scenes" id="cfScenes">${Object.entries(CENAS).map(([k,n])=>`<button type="button" data-cena="${k}" aria-pressed="${!foto&&cena===k}"><img alt="" src="${sceneURL(k)}"><span>${n}</span></button>`).join('')}</div>
+        <label for="cfFoto">Ou use uma foto sua<input id="cfFoto" type="file" accept="image/*"></label>
+        <p class="note" id="cfFotoInfo" style="margin:0">${foto?'Foto escolhida.':''}</p>
+        <div class="tight"><button class="primary" type="submit">${ed?'Salvar':'Criar cofre'}</button>${ed?'<button type="button" class="ghost" id="cfDel">Excluir cofre</button>':''}<button type="button" class="ghost" id="cfCancel">Cancelar</button></div>
+        <p class="note" id="cfConfirm" hidden style="margin:0"></p>
+      </form>`, (el, close)=>{
+      el.querySelector('#cfCancel').onclick=close;
+      el.querySelectorAll('#cfScenes button').forEach(b=>b.onclick=()=>{ cena=b.dataset.cena; foto=null; el.querySelector('#cfFotoInfo').textContent=''; el.querySelectorAll('#cfScenes button').forEach(x=>x.setAttribute('aria-pressed', x===b)); });
+      el.querySelector('#cfFoto').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const rd=new FileReader(); rd.onload=()=>{ const im=new Image(); im.onload=()=>{ const k=Math.min(1,900/Math.max(im.width,im.height)); const c2=document.createElement('canvas'); c2.width=Math.round(im.width*k); c2.height=Math.round(im.height*k); c2.getContext('2d').drawImage(im,0,0,c2.width,c2.height); foto=c2.toDataURL('image/jpeg',.72); el.querySelector('#cfFotoInfo').textContent='Foto escolhida.'; el.querySelectorAll('#cfScenes button').forEach(x=>x.setAttribute('aria-pressed','false')); }; im.onerror=()=>{ el.querySelector('#cfFotoInfo').textContent='Não consegui abrir essa imagem. Tente outra.'; }; im.src=rd.result; }; rd.readAsDataURL(f); };
+      const del=el.querySelector('#cfDel'); let armed=false;
+      if(del) del.onclick=async()=>{ if(!armed){ armed=true; del.textContent='Toque de novo para excluir'; el.querySelector('#cfConfirm').hidden=false; el.querySelector('#cfConfirm').textContent='O cofre e o valor registrado nele serão apagados.'; return; }
+        S.cofres=S.cofres.filter(x=>x.id!==c.id); await delImg(c.id); persist(); renderAll(); close(); toast('Cofre excluído'); };
+      el.querySelector('#fCofre').onsubmit=async e=>{ e.preventDefault();
+        if(!ed) sairDoExemplo();
+        const dados={nome:el.querySelector('#cfNome').value.trim(), meta:+el.querySelector('#cfMeta').value, data:el.querySelector('#cfData').value, cena, foto:!!foto};
+        let alvo;
+        if(ed){ alvo=S.cofres.find(x=>x.id===c.id); Object.assign(alvo,dados); }
+        else { alvo={id:uid(), guardado:+(el.querySelector('#cfIni').value||0), ...dados}; S.cofres.push(alvo); }
+        if(foto) await saveImg(alvo.id, foto); else if(imgs[alvo.id]) await delImg(alvo.id);
+        persist(); renderAll(); close(); toast(ed?'Sonho atualizado':'Cofre criado'); show('cofres'); };
+    });
+  }
+  function formValor(c, modo){
+    sheet(`<h2>${modo==='guardar'?'Guardar no cofre':'Retirar do cofre'}</h2><p class="muted" style="margin:0">${esc(c.nome)} · ${brl(c.guardado)} guardados</p>
+      <form id="fVal"><label for="vlValor">Valor (R$)<input id="vlValor" type="number" inputmode="decimal" min="0.01" step="0.01" required></label>
+      <div class="tight"><button class="primary" type="submit">${modo==='guardar'?'Guardar':'Retirar'}</button><button type="button" class="ghost" id="vlCancel">Cancelar</button></div></form>`,
+      (el,close)=>{ el.querySelector('#vlCancel').onclick=close;
+        el.querySelector('#fVal').onsubmit=e=>{ e.preventDefault(); const v=+el.querySelector('#vlValor').value; if(!(v>0)) return;
+          c.guardado = modo==='guardar' ? c.guardado+v : Math.max(0,c.guardado-v); persist(); renderAll(); close();
+          toast(modo==='guardar' ? (c.guardado>=c.meta ? 'Sonho conquistado!' : `Mais ${pct(c)}% perto do sonho`) : 'Valor retirado'); }; });
+  }
+
+  // ---------- wallpaper ----------
+  function wrapText(ctx, text, maxW){ const words=text.split(' '); const lines=[]; let l=''; words.forEach(w=>{ const t=l?l+' '+w:w; if(ctx.measureText(t).width>maxW && l){ lines.push(l); l=w; } else l=t; }); if(l) lines.push(l); return lines; }
+  async function drawWallpaper(cv, c){
+    const W=1080,H=1920; cv.width=W*2; cv.height=H*2; const ctx=cv.getContext('2d'); ctx.scale(2,2); // sai em 4K (2160×3840)
+    try{ await Promise.all([document.fonts.load('400 120px "DM Serif Display"'), document.fonts.load('italic 400 60px "DM Serif Display"'), document.fonts.load('600 40px Manrope')]); }catch(e){}
+    if(imgs[c.id]){ const im=new Image(); await new Promise(res=>{ im.onload=res; im.onerror=res; im.src=imgs[c.id]; }); const k=Math.max(W/im.width,H/im.height); ctx.drawImage(im,(W-im.width*k)/2,(H-im.height*k)/2,im.width*k,im.height*k); }
+    else drawScene(ctx,W,H,c.cena||'neve');
+    const sh=ctx.createLinearGradient(0,H*.35,0,H); sh.addColorStop(0,'rgba(6,9,20,0)'); sh.addColorStop(.55,'rgba(6,9,20,.72)'); sh.addColorStop(1,'rgba(6,9,20,.92)'); ctx.fillStyle=sh; ctx.fillRect(0,0,W,H);
+    const tp=ctx.createLinearGradient(0,0,0,H*.2); tp.addColorStop(0,'rgba(6,9,20,.55)'); tp.addColorStop(1,'rgba(6,9,20,0)'); ctx.fillStyle=tp; ctx.fillRect(0,0,W,H*.2);
+    const x=96, maxW=W-192; let y=H*.58;
+    ctx.fillStyle='#d9b779'; ctx.font='600 30px Manrope, sans-serif'; ctx.textAlign='left'; ctx.fillText('MEU PRÓXIMO SONHO'.split('').join(String.fromCharCode(8202)), x, y);
+    y+=110; ctx.fillStyle='#ffffff'; ctx.font='400 104px "DM Serif Display", Georgia, serif';
+    wrapText(ctx,c.nome,maxW).slice(0,3).forEach(l=>{ ctx.fillText(l,x,y); y+=110; });
+    y+=10; const p=pct(c); ctx.fillStyle='rgba(255,255,255,.18)'; ctx.beginPath(); ctx.roundRect(x,y,maxW,22,11); ctx.fill();
+    const gg=ctx.createLinearGradient(x,0,x+maxW,0); gg.addColorStop(0,'#d9b779'); gg.addColorStop(1,'#f4e2b8'); ctx.fillStyle=gg; ctx.beginPath(); ctx.roundRect(x,y,Math.max(22,maxW*p/100),22,11); ctx.fill();
+    y+=80; ctx.fillStyle='#ffffff'; ctx.font='600 44px Manrope, sans-serif'; ctx.fillText(`${p}%`, x, y);
+    ctx.fillStyle='rgba(255,255,255,.8)'; ctx.font='500 38px Manrope, sans-serif'; ctx.textAlign='right'; ctx.fillText(`${brl(c.guardado)} de ${brl(c.meta)}`, x+maxW, y); ctx.textAlign='left';
+    y+=110; ctx.fillStyle='rgba(255,255,255,.92)'; ctx.font='italic 400 54px "DM Serif Display", Georgia, serif';
+    wrapText(ctx,'“'+fraseDoDia()+'”',maxW).slice(0,4).forEach(l=>{ ctx.fillText(l,x,y); y+=68; });
+    ctx.fillStyle='rgba(255,255,255,.6)'; ctx.font='600 28px Manrope, sans-serif'; ctx.textAlign='center'; ctx.fillText('INSPIRA DIÁRIO  ·  @inspiradiariooficial', W/2, H-90);
+  }
+  function abrirWallpaper(c){
+    sheet(`<h2>Wallpaper do sonho</h2>
+      <div class="wp-wrap"><canvas id="wpCanvas" aria-label="Prévia do wallpaper" role="img"></canvas>
+      <div class="wp-side"><p class="muted" style="margin:0">Coloque como tela de bloqueio. Toda vez que pegar o celular, você lembra para que está guardando.</p>
+      <p class="note" style="margin:0">Atualize o wallpaper sempre que fizer um depósito: a barra de progresso acompanha.</p>
+      <div class="tight"><button class="primary" id="wpSave">Salvar imagem</button><button class="ghost" id="wpClose">Fechar</button></div>
+      <p class="note" id="wpMsg" style="margin:0"></p></div></div>`, async (el,close)=>{
+      el.querySelector('#wpClose').onclick=close; const cv=el.querySelector('#wpCanvas'); await drawWallpaper(cv,c);
+      const btn=el.querySelector('#wpSave'), msg=el.querySelector('#wpMsg');
+      const dl = await (window.claude?.use?.('downloads') ?? Promise.resolve(null)).catch(()=>null);
+      const nomeArq='wallpaper-'+c.nome.toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.png';
+      if(!dl){
+        if(window.claude){ btn.hidden=true; msg.textContent='Para salvar, segure o dedo sobre a imagem ou tire um print da tela.'; return; }
+        btn.onclick=()=>cv.toBlob(blob=>{ const u=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=u; a.download=nomeArq; document.body.append(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),4000); msg.textContent='Se não baixou, segure o dedo sobre a imagem e escolha salvar.'; },'image/png');
+        return;
+      }
+      btn.onclick=()=>{ btn.disabled=true; cv.toBlob(async blob=>{ try{ await dl.save({filename:'wallpaper-'+c.nome.toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.png', data:blob}); msg.textContent='Imagem salva.'; }
+        catch(e){ msg.textContent = e && e.code==='declined' ? 'Download cancelado.' : 'Não deu para salvar aqui. Tire um print da prévia.'; } finally{ btn.disabled=false; } },'image/png'); };
+    });
+  }
+
+  // ---------- eventos ----------
+  document.addEventListener('click', e=>{
+    const b=e.target.closest('[data-act]'); if(!b) return; const act=b.dataset.act; const c=S.cofres.find(x=>x.id===b.dataset.id);
+    if(act==='guardar'&&c) formValor(c,'guardar');
+    else if(act==='retirar'&&c) formValor(c,'retirar');
+    else if(act==='editar'&&c) formCofre(c);
+    else if(act==='wallpaper'&&c) abrirWallpaper(c);
+    else if(act==='novo') formCofre(null);
+    else if(act==='delmov'){ S.movs=S.movs.filter(m=>m.id!==b.dataset.id); persist(); renderAll(); }
+    else if(act==='d52'){ sairDoExemploSuave(); const w=+b.dataset.w; S.d52.done = S.d52.done.includes(w) ? S.d52.done.filter(x=>x!==w) : [...S.d52.done,w]; persist(); renderAll(); }
+    else if(act==='d30'){ sairDoExemploSuave(); const d=+b.dataset.d; S.d30 = S.d30.includes(d) ? S.d30.filter(x=>x!==d) : [...S.d30,d]; persist(); renderAll(); }
+  });
+  function sairDoExemploSuave(){ /* nos exemplos, marcar desafios é só para testar; os dados reais começam no botão "Começar do zero" ou no primeiro cofre/lançamento */ }
+  $('#btnNovoCofre').onclick=()=>formCofre(null);
+  let resetArmed=false;
+  $('#btnReset').onclick=()=>{ if(!resetArmed){ resetArmed=true; $('#btnReset').textContent='Toque de novo para apagar os exemplos'; return; } S=vazio(); Object.keys(imgs).forEach(k=>delete imgs[k]); persist(); renderAll(); toast('Pronto. Crie seu primeiro sonho.'); show('cofres'); };
+  $('#movTipo').onchange=renderGastos;
+  $('#fMov').onsubmit=e=>{ e.preventDefault(); const valor=+$('#movValor').value; if(!(valor>0)) return;
+    sairDoExemplo();
+    const m={id:uid(), tipo:$('#movTipo').value, valor, cat:$('#movCat').value, desc:$('#movDesc').value.trim(), data:hoje()}; S.movs.push(m);
+    const ins=$('#movInsight'); const alvo=S.cofres.find(c=>c.guardado<c.meta);
+    if(m.tipo==='saida' && alvo){ const pm=porMes(alvo); const dias = pm>0 ? Math.round(m.valor/(pm/30)) : 0; ins.hidden=false;
+      ins.innerHTML = dias>=1 ? `Esse gasto equivale a <b>${dias} ${dias>1?'dias':'dia'}</b> de economia para "${esc(alvo.nome)}". Valeu a pena? Se sim, tudo certo.` : `Registrado. Gasto pequeno, sonho seguindo no ritmo.`; }
+    else if(m.tipo==='entrada'){ ins.hidden=false; ins.innerHTML = alvo ? `Entrou dinheiro. Que tal mandar uma parte para "${esc(alvo.nome)}" antes de gastar?` : 'Entrada registrada.'; }
+    $('#movValor').value=''; $('#movDesc').value=''; persist(); renderAll(); };
+  $('#d52Base').onchange=e=>{ const v=Math.max(1,Math.round(+e.target.value||1)); S.d52.base=v; persist(); renderAll(); };
+  ['#simInicial','#simMensal','#simAnos','#simTaxa'].forEach(s=>$(s).addEventListener('input',renderSim));
+  window.addEventListener('resize',()=>{ if(!$('#v-sim').hidden) renderSim(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ const s=document.querySelector('.sheet-bg'); s&&s.remove(); } });
+
+  boot();
+  try{ const t=sessionStorage.getItem('cofre-tab'); if(t) show(t); }catch(e){}
+})();
+</script>
+
+</body></html>
