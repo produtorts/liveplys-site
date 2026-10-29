@@ -1,4 +1,4 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0c1222"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Cofre dos Sonhos"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icone-192.png"><meta name="robots" content="noindex,nofollow"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0c1222"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Cofre dos Sonhos"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icone-192.png"><script>window.COFRE_CONFIG={supabaseUrl:"https://rvkziyvihxweyrqnhuuh.supabase.co",supabaseAnonKey:"sb_publishable_LHIUAPcrjo-5A62OVVAe6w_qfPlIAjv",linkCompraEntrada:"",linkComunidade:"",vapidPublica:"BKEmqj4nWni1jQ4seN10uUrrIQnGPRISNZyZhGWbTgGY_niFoL6Q3_0ahCUdxRGCKDS6opYH8UzBrkaMJ-J9Nhc",pastaFundos:"fundos/",loginSenha:true};</script><meta name="robots" content="noindex,nofollow"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
 <title>Cofre dos Sonhos</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -434,7 +434,7 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
     sb:null, usuario:null, timer:null,
     async iniciar(){
       if(!MODO_REAL){ const l=lsLer('cofre2-estado'); if(l){ try{ S=Object.assign(vazio(),JSON.parse(l)); }catch(e){} } planoAtual=lsLer('cofre2-plano-demo')||'entrada'; return; }
-      await carregarScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js');
+      await carregarScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js');
       this.sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey, {auth:{persistSession:true, detectSessionInUrl:true}});
       const { data:{ session } } = await this.sb.auth.getSession();
       this.usuario = session?.user || null;
@@ -872,6 +872,7 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
 
   /* ---------- login (produção) ---------- */
   function abrirLogin(){
+    if(CFG.loginSenha) return abrirLoginSenha();
     folha(`<h2>Salve sua conquista</h2><p class="fraco">Entre com seu e-mail para guardar tudo na sua conta e acessar de qualquer celular. Use o mesmo e-mail da compra.</p>
       <form id="fLogin"><label for="lEmail">E-mail<input id="lEmail" type="email" required autocomplete="email"></label><button class="ouro" type="submit" id="lBtn">Receber código</button></form>
       <form id="fCodigo" hidden><label for="lCod">Código de 6 dígitos enviado ao seu e-mail<input id="lCod" inputmode="numeric" maxlength="8" required autocomplete="one-time-code"></label><button class="ouro" type="submit">Entrar</button></form>
@@ -884,6 +885,31 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
           if(!(await Dados.temAcesso())){ m.innerHTML=`Não encontramos uma compra com este e-mail. ${CFG.linkCompraEntrada?`<a href="${esc(CFG.linkCompraEntrada)}" target="_blank" rel="noopener" style="color:var(--ouro)">Garantir meu acesso por R$ 19,90</a>`:''}`; return; }
           await Dados.carregarNuvem(); fechar(); renderTudo(); aviso('Conta conectada'); }
         catch(err){ m.textContent='Código inválido ou expirado. Peça um novo.'; } };
+    });
+  }
+
+  // Login com e-mail e senha (usado enquanto o e-mail com código não está configurado).
+  function abrirLoginSenha(){
+    folha(`<h2>Salve sua conquista</h2><p class="fraco">Crie sua conta com o mesmo e-mail da compra. Assim tudo fica guardado e você acessa de qualquer celular.</p>
+      <form id="fSenha"><label for="sEmail">E-mail<input id="sEmail" type="email" required autocomplete="email"></label>
+        <label for="sSenha">Senha (mínimo 6 caracteres)<input id="sSenha" type="password" required minlength="6" autocomplete="current-password"></label>
+        <div class="duas"><button class="ouro" type="submit" data-modo="entrar">Entrar</button><button type="submit" data-modo="criar">Criar conta</button></div></form>
+      <p class="nota" id="sMsg"></p>`, (el,fechar)=>{
+      let modo='entrar'; el.querySelectorAll('#fSenha button').forEach(b=>b.addEventListener('click',()=>modo=b.dataset.modo));
+      el.querySelector('#fSenha').onsubmit=async e=>{ e.preventDefault(); const m=el.querySelector('#sMsg'); const email=el.querySelector('#sEmail').value.trim().toLowerCase(), senha=el.querySelector('#sSenha').value;
+        el.querySelectorAll('#fSenha button').forEach(b=>b.disabled=true); m.textContent= modo==='criar'?'Criando sua conta…':'Entrando…';
+        try{
+          const r = modo==='criar' ? await Dados.sb.auth.signUp({email, password:senha}) : await Dados.sb.auth.signInWithPassword({email, password:senha});
+          if(r.error) throw r.error;
+          Dados.usuario = r.data.user || r.data.session?.user;
+          if(!r.data.session){ m.textContent='Conta criada. Confirme pelo e-mail que enviamos e depois toque em Entrar.'; return; }
+          if(!(await Dados.temAcesso())){ await Dados.sb.auth.signOut(); Dados.usuario=null; m.innerHTML=`Não encontramos uma compra com este e-mail. ${CFG.linkCompraEntrada?`<a href="${esc(CFG.linkCompraEntrada)}" target="_blank" rel="noopener" style="color:var(--ouro)">Garantir meu acesso por R$ 19,90</a>`:''}`; return; }
+          await Dados.carregarNuvem(); await Dados.verificarPush(); fechar(); renderTudo(); aviso('Conta conectada');
+          if(!Dados.pushAtivo){ telaMais='lembretes'; renderMais(); irAba('mais'); }
+        }catch(err){
+          const t=String(err?.message||'');
+          m.textContent = /invalid login/i.test(t) ? 'E-mail ou senha incorretos. Se ainda não tem conta, toque em Criar conta.' : /already registered|already been registered/i.test(t) ? 'Este e-mail já tem conta. Toque em Entrar.' : /password/i.test(t) ? 'A senha precisa ter pelo menos 6 caracteres.' : 'Não deu certo agora. Confira a internet e tente de novo.';
+        } finally { el.querySelectorAll('#fSenha button').forEach(b=>b.disabled=false); } };
     });
   }
 
