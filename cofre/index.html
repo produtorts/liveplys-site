@@ -321,6 +321,8 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
   const LOGO_MINI='<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="16" fill="none" stroke="#e2c48a" stroke-width="2"/><g stroke="#e2c48a" stroke-width="1.8" stroke-linecap="round"><path d="M20 5.5v3M20 31.5v3M5.5 20h3M31.5 20h3"/></g><circle cx="20" cy="17.5" r="3.6" fill="#e2c48a"/><path d="M18.2 19.6h3.6l1 7h-5.6z" fill="#e2c48a"/></svg>';
   function notificar(tipo, vars){
     const msg=montarMensagem(tipo, vars); if(!msg) return;
+    // Mesma mensagem como notificação real no celular, alguns segundos depois (para o print na tela de bloqueio).
+    if(MODO_REAL && Dados.pushAtivo && S.lembretes.pushEventos!==false && tipo!=='reservaMensal' && tipo!=='motivacao') Dados.pushEvento(tipo, msg);
     document.querySelectorAll('.notif').forEach(n=>n.remove());
     const n=document.createElement('div'); n.className='notif'; n.setAttribute('role','status');
     n.innerHTML=`<span class="ic">${LOGO_MINI}</span><span class="quem"><span>COFRE DOS SONHOS</span><span>agora</span></span><b></b><p></p>`;
@@ -409,7 +411,7 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
   async function preCarregarFundos(){ await Promise.all(FUNDOS.map(imagemFundo)); Object.keys(cacheMini).forEach(k=>delete cacheMini[k]); renderTudo(); }
 
   /* ===================== ESTADO ===================== */
-  const lembretesPadrao = () => ({ reserva:true, diaReserva:5, desafio:true, diaDesafio:0, motivacao:3, horaMotivacao:8, progresso:true, alertasGasto:true });
+  const lembretesPadrao = () => ({ reserva:true, diaReserva:5, desafio:true, diaDesafio:0, motivacao:3, horaMotivacao:8, progresso:true, alertasGasto:true, pushEventos:true });
   const vazio = () => ({ versao:2, onboarding:false, cofres:[], movs:[], d30:[], d52:{base:5,feitas:[]}, dividas:[], marcos:{}, lembretes:lembretesPadrao() });
   let S = vazio();
   const fotos = {}; // cofreId -> dataURL (Premium)
@@ -479,6 +481,7 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
       const { error } = await this.sb.from('push_inscricoes').upsert({user_id:this.usuario.id, endpoint:j.endpoint, p256dh:j.keys.p256dh, auth:j.keys.auth});
       if(error) throw error; this.pushAtivo=true;
     },
+    pushEvento(tipo, msg){ this.sb.functions.invoke('notificar-evento', { body:{ tipo, titulo:msg.titulo, texto:msg.texto } }).catch(()=>{}); },
     async notificacaoLocal(titulo, texto){ const reg=await navigator.serviceWorker.getRegistration(); if(reg) await reg.showNotification(titulo,{body:texto, icon:'icone-192.png', badge:'icone-badge.png', tag:'teste'}); },
     async assinar(plano, nome, cpf){
       const { data, error } = await this.sb.functions.invoke('criar-assinatura', { body:{ plano, nome, cpf } });
@@ -732,11 +735,12 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
         <div class="interruptor"><span><b>Desafio da semana</b><br><span class="nota">Às 19h</span></span><span class="juntos"><select id="lSem" aria-label="Dia da semana">${SEM.map((s,i)=>`<option value="${i}" ${L.diaDesafio===i?'selected':''}>${s}</option>`).join('')}</select><input type="checkbox" id="lDes" aria-label="Lembrete do desafio" ${L.desafio?'checked':''}></span></div>
         <div class="interruptor"><span><b>Motivação</b><br><span class="nota">Frase para começar o dia</span></span><span class="juntos"><select id="lMot" aria-label="Frequência">${[[0,'Desligado'],[2,'2x por semana'],[3,'3x por semana'],[5,'Dias úteis']].map(([v,t])=>`<option value="${v}" ${L.motivacao===v?'selected':''}>${t}</option>`).join('')}</select><select id="lHora" aria-label="Horário">${[7,8,9,12,18,20].map(h=>`<option value="${h}" ${L.horaMotivacao===h?'selected':''}>${h}h</option>`).join('')}</select></span></div>
         <div class="interruptor"><span><b>Como você está indo</b><br><span class="nota">Aos domingos: parabéns quando estiver bem, um toque quando parar</span></span><input type="checkbox" id="lPro" aria-label="Resumo do progresso" ${L.progresso?'checked':''}></div>
+        <div class="interruptor"><span><b>Depósitos e metas no celular</b><br><span class="nota">A mensagem chega na tela de bloqueio uns segundos depois. Bloqueie a tela e veja chegar.</span></span><input type="checkbox" id="lEve" aria-label="Notificar depósitos e metas no celular" ${L.pushEventos?'checked':''}></div>
         <div class="interruptor"><span><b>Alertas de gasto por impulso</b><br><span class="nota">Quando lançar delivery, lazer ou compras</span></span><input type="checkbox" id="lGas" aria-label="Alertas de gasto" ${L.alertasGasto?'checked':''}></div>
       </div>
-      <p class="nota">No máximo 1 lembrete por dia, sempre entre 7h e 21h. Parabéns e avisos de depósito aparecem na hora, dentro do app.</p>`;
-    const salvar=()=>{ L.diaReserva=+$('#lDia').value; L.reserva=$('#lRes').checked; L.diaDesafio=+$('#lSem').value; L.desafio=$('#lDes').checked; L.motivacao=+$('#lMot').value; L.horaMotivacao=+$('#lHora').value; L.progresso=$('#lPro').checked; L.alertasGasto=$('#lGas').checked; Dados.salvar(); aviso('Lembretes salvos'); };
-    ['#lDia','#lRes','#lSem','#lDes','#lMot','#lHora','#lPro','#lGas'].forEach(s=>$(s).addEventListener('change',salvar));
+      <p class="nota">Lembretes agendados: no máximo 1 por dia, sempre entre 7h e 21h. Depósitos, resgates, gastos e metas: aparecem na hora dentro do app e, se ativado acima, chegam também no celular.</p>`;
+    const salvar=()=>{ L.diaReserva=+$('#lDia').value; L.reserva=$('#lRes').checked; L.diaDesafio=+$('#lSem').value; L.desafio=$('#lDes').checked; L.motivacao=+$('#lMot').value; L.horaMotivacao=+$('#lHora').value; L.progresso=$('#lPro').checked; L.alertasGasto=$('#lGas').checked; L.pushEventos=$('#lEve').checked; Dados.salvar(); aviso('Lembretes salvos'); };
+    ['#lDia','#lRes','#lSem','#lDes','#lMot','#lHora','#lPro','#lGas','#lEve'].forEach(s=>$(s).addEventListener('change',salvar));
   }
   function renderDividas(corpo,voltar){
     if(!P().dividas){ corpo.innerHTML=`${voltar}<h2>Plano para sair das dívidas</h2><div class="cartao"><p>Liste suas dívidas e descubra qual pagar primeiro: pelo método bola de neve (a menor primeiro, para ganhar motivação) ou avalanche (os juros mais altos primeiro, para pagar menos).</p><button class="ouro" data-acao="planos">Destravar no Premium</button></div>`; return; }
@@ -947,7 +951,7 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
       case 'sair': Dados.sair(); break;
       case 'ativar-push': (async()=>{ b.disabled=true; try{ await Dados.ativarPush(); aviso('Notificações ativadas'); }catch(err){ aviso(err.message==='permissao'?'Você não permitiu as notificações':'Não deu para ativar agora. Tente de novo.'); } renderMais(); })(); break;
       case 'testar-notif': { const c=S.cofres.find(x=>x.guardado<x.meta)||S.cofres[0]; const tipo=c?'reservaMensal':'motivacao';
-        if(MODO_REAL && Dados.pushAtivo){ const m=montarMensagem(tipo,varsCofre(c)); Dados.notificacaoLocal(m.titulo,m.texto); aviso('Bloqueie a tela para ver como chega'); }
+        if(MODO_REAL && Dados.pushAtivo){ const m=montarMensagem(tipo,varsCofre(c)); Dados.pushEvento('teste', m); aviso('Bloqueie a tela: a notificação chega em uns 6 segundos'); }
         else notificar(tipo, varsCofre(c)); break; }
       case 'fechar-celebra': document.querySelectorAll('.celebra,.confete').forEach(x=>x.remove()); break;
     }
