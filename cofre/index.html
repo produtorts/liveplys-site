@@ -1,4 +1,4 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0c1222"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Cofre dos Sonhos"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icone-192.png"><script>window.COFRE_CONFIG={supabaseUrl:"https://rvkziyvihxweyrqnhuuh.supabase.co",supabaseAnonKey:"sb_publishable_LHIUAPcrjo-5A62OVVAe6w_qfPlIAjv",linkCompraEntrada:"",linkComunidade:"",vapidPublica:"BKEmqj4nWni1jQ4seN10uUrrIQnGPRISNZyZhGWbTgGY_niFoL6Q3_0ahCUdxRGCKDS6opYH8UzBrkaMJ-J9Nhc",pastaFundos:"fundos/",loginSenha:true};</script><meta name="robots" content="noindex,nofollow"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0c1222"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="apple-mobile-web-app-title" content="Cofre dos Sonhos"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icone-192.png"><script>window.COFRE_CONFIG={supabaseUrl:"https://rvkziyvihxweyrqnhuuh.supabase.co",supabaseAnonKey:"sb_publishable_LHIUAPcrjo-5A62OVVAe6w_qfPlIAjv",linkCompraEntrada:"",linkComunidade:"",vapidPublica:"BKEmqj4nWni1jQ4seN10uUrrIQnGPRISNZyZhGWbTgGY_niFoL6Q3_0ahCUdxRGCKDS6opYH8UzBrkaMJ-J9Nhc",pastaFundos:"fundos/",loginSenha:true};</script><meta name="robots" content="noindex,nofollow"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
 <title>Cofre dos Sonhos</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -255,7 +255,8 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const brl = v => (Number(v)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:(Math.abs(v)%1?2:0)});
   const novoId = () => Math.random().toString(36).slice(2,10);
-  const hoje = () => new Date().toISOString().slice(0,10);
+  const dataLocal = d => new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  const hoje = () => dataLocal(new Date());
   const lsLer = k => { try{ return localStorage.getItem(k); }catch(e){ return null; } };
   const lsGravar = (k,v) => { try{ localStorage.setItem(k,v); }catch(e){} };
   function aviso(t){ const d=document.createElement('div'); d.className='aviso'; d.textContent=t; document.body.append(d); setTimeout(()=>d.remove(),2400); }
@@ -412,8 +413,15 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
 
   /* ===================== ESTADO ===================== */
   const lembretesPadrao = () => ({ reserva:true, diaReserva:5, desafio:true, diaDesafio:0, motivacao:3, horaMotivacao:8, progresso:true, alertasGasto:true, pushEventos:true });
-  const vazio = () => ({ versao:2, onboarding:false, cofres:[], movs:[], d30:[], d52:{base:5,feitas:[]}, dividas:[], marcos:{}, lembretes:lembretesPadrao() });
+  const vazio = () => ({ versao:2, onboarding:false, cofres:[], movs:[], d30:[], desafio30:{inicio:null}, d52:{base:5,feitas:[]}, dividas:[], marcos:{}, lembretes:lembretesPadrao() });
   let S = vazio();
+  // Desafio de 30 dias: começa no dia em que a pessoa decide entrar.
+  function normalizar(){
+    if(!S.desafio30){ S.desafio30={inicio:null}; S.d30=[]; } // dados antigos (calendário corrido) são descartados
+    S.d30 = (S.d30||[]).filter(d=>S.desafio30.inicio && d>=S.desafio30.inicio);
+  }
+  function diasDesafio(){ if(!S.desafio30.inicio) return []; const b=new Date(S.desafio30.inicio+'T12:00:00'); return Array.from({length:30},(_,i)=>{ const d=new Date(b); d.setDate(b.getDate()+i); return dataLocal(d); }); }
+  function diaDoDesafio(){ if(!S.desafio30.inicio) return 0; return Math.floor((Date.parse(hoje()+'T12:00:00')-Date.parse(S.desafio30.inicio+'T12:00:00'))/864e5)+1; }
   const fotos = {}; // cofreId -> dataURL (Premium)
 
   const pct = c => Math.min(100, Math.floor(c.guardado/c.meta*100)||0);
@@ -526,10 +534,16 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
         <div class="acoes-rapidas">${[10,20,50,100].map(v=>`<button data-acao="guardar-rapido" data-id="${ativo.id}" data-valor="${v}">+${brl(v)}</button>`).join('')}</div>
         <div class="juntos"><button class="vazado mini" data-acao="wallpaper" data-id="${ativo.id}">Criar wallpaper desta conquista</button></div>`;
     }
-    const d30=S.d30.length;
-    $('#cartaoDesafio').innerHTML=`<div class="linha"><h3>30 dias sem gasto por impulso</h3><span class="num fraco">${d30}/30</span></div>
-      <div class="barra"><i style="width:${d30/30*100}%"></i></div>
+    const n30=S.d30.length, dia=diaDoDesafio();
+    if(!S.desafio30.inicio){
+      $('#cartaoDesafio').innerHTML=`<h3>Desafio dos 30 dias sem gasto por impulso</h3><p class="nota">Durante 30 dias, você marca cada dia em que não gastou por impulso. Começa hoje, se você topar.</p><button class="ouro" data-acao="d30-comecar">Começar hoje</button>`;
+    } else if(dia>30){
+      $('#cartaoDesafio').innerHTML=`<div class="linha"><h3>Desafio concluído</h3><span class="num fraco">${n30}/30</span></div><p class="nota">${n30>=25?'Disciplina de quem conquista. ':''}Você ficou ${n30} de 30 dias sem gasto por impulso.</p><button class="vazado" data-acao="d30-comecar">Começar um novo desafio</button>`;
+    } else {
+      $('#cartaoDesafio').innerHTML=`<div class="linha"><h3>Desafio: dia ${dia} de 30</h3><span class="num fraco">${n30}/30</span></div>
+      <div class="barra"><i style="width:${n30/30*100}%"></i></div>
       <div class="linha"><span class="nota">Hoje você resistiu a um gasto por impulso?</span><button class="mini ${S.d30.includes(hoje())?'':'ouro'}" data-acao="d30-hoje">${S.d30.includes(hoje())?'Marcado hoje':'Sim, marcar hoje'}</button></div>`;
+    }
   }
   function renderCofres(){
     const max=P().maxCofres;
@@ -685,11 +699,13 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
   }
   function renderDesafios(corpo,voltar){
     const b=S.d52.base, total=1378*b, feito=S.d52.feitas.reduce((a,w)=>a+w*b,0);
-    const ultimos=[]; for(let i=29;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); ultimos.push(d.toISOString().slice(0,10)); }
+    const dias=diasDesafio(), h=hoje();
     corpo.innerHTML=`${voltar}<h2>Desafios</h2>
       <div class="cartao"><div class="linha"><h3>30 dias sem gasto por impulso</h3><span class="num fraco">${S.d30.length}/30</span></div>
         <p class="nota">Marque os dias em que você não gastou por impulso: delivery por preguiça, compra fora do plano, assinatura esquecida.</p>
-        <div class="casas">${ultimos.map(d=>`<button data-acao="d30" data-d="${d}" aria-pressed="${S.d30.includes(d)}">${d.slice(8)}/${d.slice(5,7)}</button>`).join('')}</div></div>
+        ${!dias.length?`<button class="ouro" data-acao="d30-comecar">Começar hoje</button>`:`<p class="nota">Começou em ${new Date(S.desafio30.inicio+'T12:00:00').toLocaleDateString('pt-BR')}. Dá para marcar hoje e os dias que passaram; os próximos liberam no dia.</p>
+        <div class="casas">${dias.map((d,i)=>`<button data-acao="d30" data-d="${d}" aria-pressed="${S.d30.includes(d)}" ${d>h?'disabled':''} style="${d===h?'outline:2px solid var(--aurora);outline-offset:1px;':''}line-height:1.2;flex-direction:column;gap:1px;padding:7px 0"><span style="display:block;font-weight:800">Dia ${i+1}</span><span style="font-size:10.5px;opacity:.75">${d.slice(8)}/${d.slice(5,7)}</span></button>`).join('')}</div>
+        ${diaDoDesafio()>30?`<button class="vazado mini" data-acao="d30-comecar" style="align-self:flex-start">Começar um novo desafio</button>`:''}`}</div>
       <div class="cartao"><div class="linha"><h3>52 semanas</h3>${P().d52?`<span class="num fraco">${brl(feito)} de ${brl(total)}</span>`:`<span class="cadeado">${cadeadoSvg()} Premium</span>`}</div>
         <p class="nota">Na semana 1 você guarda 1× o valor base; na semana 52, 52×. Com base de ${brl(b)}, são ${brl(total)} em um ano.</p>
         ${P().d52?`<label for="d52Base" style="max-width:180px">Valor base (R$)<input id="d52Base" type="number" min="1" step="1" value="${b}"></label>
@@ -945,7 +961,7 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
   function irAba(a){ document.querySelectorAll('section.tela').forEach(s=>s.hidden=s.id!=='t-'+a);
     document.querySelectorAll('nav.abas [data-aba]').forEach(b=>{ if(b.dataset.aba===a) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
     if(a==='mais' && telaMais!=='menu'){ /* mantém subtela */ } scrollTo(0,0); try{ sessionStorage.setItem('cofre2-aba',a); }catch(e){} }
-  function renderTudo(){ renderTopo(); renderInicio(); renderCofres(); renderEstudio(); renderMais(); }
+  function renderTudo(){ normalizar(); renderTopo(); renderInicio(); renderCofres(); renderEstudio(); renderMais(); }
 
   document.addEventListener('click', e=>{
     const b=e.target.closest('[data-aba],[data-acao]'); if(!b) return;
@@ -967,8 +983,9 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
       case 'mais-ir': telaMais=b.dataset.t; renderMais(); scrollTo(0,0); break;
       case 'mais-menu': telaMais='menu'; renderMais(); break;
       case 'apagar-mov': S.movs=S.movs.filter(m=>m.id!==b.dataset.id); Dados.salvar(); renderMais(); break;
-      case 'd30-hoje': { const h=hoje(); S.d30 = S.d30.includes(h)?S.d30.filter(x=>x!==h):S.d30.concat(h); Dados.salvar(); renderInicio(); if(S.d30.length===30) celebrar('30 dias de disciplina','Você provou que manda no seu dinheiro.'); break; }
-      case 'd30': { const d=b.dataset.d; S.d30 = S.d30.includes(d)?S.d30.filter(x=>x!==d):S.d30.concat(d); Dados.salvar(); renderMais(); renderInicio(); break; }
+      case 'd30-comecar': S.desafio30={inicio:hoje()}; S.d30=[]; Dados.salvar(); renderInicio(); renderMais(); aviso('Desafio começou. Dia 1 de 30!'); break;
+      case 'd30-hoje': { const h=hoje(); if(!S.desafio30.inicio||diaDoDesafio()>30) break; S.d30 = S.d30.includes(h)?S.d30.filter(x=>x!==h):S.d30.concat(h); Dados.salvar(); renderInicio(); if(S.d30.length===30) celebrar('30 dias de disciplina','Você provou que manda no seu dinheiro.'); break; }
+      case 'd30': { const d=b.dataset.d; if(d>hoje()||!diasDesafio().includes(d)) break; S.d30 = S.d30.includes(d)?S.d30.filter(x=>x!==d):S.d30.concat(d); Dados.salvar(); renderMais(); renderInicio(); if(S.d30.length===30) celebrar('30 dias de disciplina','Você provou que manda no seu dinheiro.'); break; }
       case 'd52': { const w=+b.dataset.w; S.d52.feitas = S.d52.feitas.includes(w)?S.d52.feitas.filter(x=>x!==w):S.d52.feitas.concat(w); Dados.salvar(); renderMais(); break; }
       case 'metodo': S.metodoDivida=b.dataset.m; Dados.salvar(); renderMais(); break;
       case 'apagar-divida': S.dividas=S.dividas.filter(d=>d.id!==b.dataset.id); Dados.salvar(); renderMais(); break;
