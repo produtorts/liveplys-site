@@ -365,16 +365,18 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
   // Biblioteca de fundos: 3 imagens por tema. Cada pessoa vê 1 liberada por tema (escolhida pelo sexo); o resto é Premium.
   const CENA_DA_CAT = {carro:'estrada',moto:'estrada',casa:'neve',celular:'cidade',notebook:'cidade',neve:'neve',praia:'mar',liberdade:'aurora',negocio:'cidade',estudos:'cidade',outro:'aurora'};
   const SEXO_FUNDO = {"carro-1": "homem", "carro-2": "neutro", "carro-3": "neutro", "moto-1": "homem", "moto-2": "homem", "moto-3": "neutro", "casa-1": "neutro", "casa-2": "neutro", "casa-3": "homem", "celular-1": "neutro", "celular-2": "homem", "celular-3": "neutro", "notebook-1": "neutro", "notebook-2": "neutro", "notebook-3": "homem", "neve-1": "mulher", "neve-2": "homem", "neve-3": "homem", "praia-1": "neutro", "praia-2": "mulher", "praia-3": "homem", "liberdade-1": "homem", "liberdade-2": "neutro", "liberdade-3": "mulher", "negocio-1": "homem", "negocio-2": "homem", "negocio-3": "mulher", "estudos-1": "homem", "estudos-2": "homem", "estudos-3": "neutro"};
-  const LIVRE = {"homem": {"carro": "carro-1", "moto": "moto-1", "casa": "casa-3", "celular": "celular-2", "notebook": "notebook-3", "neve": "neve-2", "praia": "praia-3", "liberdade": "liberdade-1", "negocio": "negocio-1", "estudos": "estudos-1"}, "mulher": {"carro": "carro-3", "moto": "moto-3", "casa": "casa-1", "celular": "celular-1", "notebook": "notebook-1", "neve": "neve-1", "praia": "praia-2", "liberdade": "liberdade-3", "negocio": "negocio-3", "estudos": "estudos-3"}, "neutro": {"carro": "carro-3", "moto": "moto-3", "casa": "casa-1", "celular": "celular-1", "notebook": "notebook-1", "neve": "neve-3", "praia": "praia-1", "liberdade": "liberdade-2", "negocio": "negocio-1", "estudos": "estudos-3"}};
+  // Plano básico: estas 7 imagens, iguais para todo mundo. Temas sem imagem própria usam a mais próxima.
+  const LIVRE_TEMA = {carro:'carro-1', moto:'moto-1', celular:'celular-3', notebook:'notebook-3', neve:'neve-2', praia:'praia-3', estudos:'estudos-1', casa:'neve-2', liberdade:'praia-3', negocio:'notebook-3', outro:'praia-3'};
+  const LIVRES = new Set(Object.values(LIVRE_TEMA));
   const temaDe = cat => cat==='outro' ? 'liberdade' : cat;
   const FUNDOS = [];
   CATEGORIAS.forEach(([cat])=>{ if(cat==='outro') return; for(let i=1;i<=3;i++) FUNDOS.push({id:`${cat}-${i}`, cat, n:i, sexo:SEXO_FUNDO[`${cat}-${i}`]||'neutro'}); });
-  const NO_SITE = new Set(Object.values(LIVRE).flatMap(o=>Object.values(o))); // as únicas imagens publicadas no site
+  const NO_SITE = LIVRES; // as únicas imagens publicadas no site
   const sexoUsuario = () => { const s=S.perfil&&S.perfil.sexo; return s==='homem'||s==='mulher' ? s : 'neutro'; };
-  const fundoLivre = cat => LIVRE[sexoUsuario()][temaDe(cat)];
+  const fundoLivre = cat => LIVRE_TEMA[cat] || 'praia-3';
   const fundoPorId = id => FUNDOS.find(f=>f.id===id);
-  const fundosDaCat = cat => FUNDOS.filter(f=>f.cat===temaDe(cat));
-  const fundoPodeUsar = f => !!f && (P().todosFundos || f.id===fundoLivre(f.cat));
+  const fundosDaCat = cat => { const l=fundoPorId(fundoLivre(cat)); return [l].concat(FUNDOS.filter(f=>f.cat===temaDe(cat) && f!==l)); };
+  const fundoPodeUsar = f => !!f && (P().todosFundos || LIVRES.has(f.id));
 
   /* ===================== CENAS PROVISÓRIAS (até chegarem as imagens reais) ===================== */
   function rng(seed){ let s=seed>>>0||1; return ()=> (s=(s*1664525+1013904223)>>>0)/4294967296; }
@@ -615,7 +617,7 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
     const c=S.cofres.find(x=>x.id===est.cofreId);
     if(!fundoPodeUsar(fundoPorId(est.fundo))) est.fundo = fundoDoCofre(c).id;
     if(!P().layouts.includes(est.layout)) est.layout='minimal';
-    const fs = fundosDaCat(c.cat).concat(P().todosFundos ? FUNDOS.filter(f=>f.cat!==temaDe(c.cat)) : []);
+    const fs0 = fundosDaCat(c.cat), fs = fs0.concat(P().todosFundos ? FUNDOS.filter(f=>!fs0.includes(f)) : []);
     corpo.innerHTML=`<div class="estudio"><canvas id="telaWp" aria-label="Prévia do wallpaper" role="img"></canvas>
       <div class="lado">
         ${S.cofres.length>1?`<label for="wpCofre">Conquista<select id="wpCofre">${S.cofres.map(x=>`<option value="${x.id}" ${x.id===c.id?'selected':''}>${esc(x.nome)}</option>`).join('')}</select></label>`:`<div><span class="sobre">Conquista</span><p style="font-weight:700">${esc(c.nome)}</p></div>`}
@@ -1021,7 +1023,7 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
     let sx=(S.perfil&&S.perfil.sexo)||'';
     f.innerHTML=`<label for="pNome">Seu nome<input id="pNome" required maxlength="30" autocomplete="given-name" placeholder="Ex.: Lucas" value="${esc(S.perfil&&S.perfil.nome||'')}"></label>
       <div><span class="sobre">Você é</span><div class="sexos" style="margin-top:8px">${[['homem','Homem'],['mulher','Mulher'],['outro','Prefiro não dizer']].map(([id,n])=>`<button type="button" data-sx="${id}" aria-pressed="${sx===id}">${n}</button>`).join('')}</div>
-      <p class="nota" style="margin-top:6px">Usamos só para escolher as capas e os wallpapers que combinam com você.</p></div>
+      <p class="nota" style="margin-top:6px">Usamos para deixar o Cofre com a sua cara.</p></div>
       <button class="ouro bloco" type="submit">${rotulo||'Salvar'}</button><p class="nota" id="pMsg" role="status"></p>`;
     f.querySelectorAll('[data-sx]').forEach(b=>b.onclick=()=>{ sx=b.dataset.sx; f.querySelectorAll('[data-sx]').forEach(x=>x.setAttribute('aria-pressed',x===b)); f.querySelector('#pMsg').textContent=''; });
     f.onsubmit=e=>{ e.preventDefault(); const nome=f.querySelector('#pNome').value.trim().replace(/\s+/g,' ');
