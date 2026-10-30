@@ -203,6 +203,7 @@ canvas.confete{position:fixed;inset:0;width:100%;height:100%;pointer-events:none
   <!-- INÍCIO -->
   <section class="tela" id="t-inicio">
     <div class="ola" id="ola" hidden><span class="sobre" id="olaHora"></span><h1 id="olaNome"></h1></div>
+    <div class="cartao" id="avisoEntrar" hidden style="border-color:var(--ouro-forte);flex-direction:row;align-items:center;gap:12px"><p style="flex:1;margin:0;font-size:14px"><b>Você não está conectado.</b><br><span class="nota">Entre na sua conta para salvar seus cofres e liberar o seu plano.</span></p><button class="ouro mini" data-acao="entrar">Entrar</button></div>
     <div id="heroi"></div>
     <div class="cartao">
       <span class="sobre">Frase do dia</span>
@@ -568,6 +569,7 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
   function renderInicio(){
     const nm=primeiroNome(), hr=new Date().getHours();
     $('#ola').hidden=!nm; $('#olaNome').textContent='Olá, '+nm; $('#olaHora').textContent = hr<5?'Boa noite':hr<12?'Bom dia':hr<18?'Boa tarde':'Boa noite';
+    $('#avisoEntrar').hidden = !(MODO_REAL && !Dados.usuario);
     $('#frase').textContent=fraseDoDia();
     $('#kTotal').textContent=brl(S.cofres.reduce((a,c)=>a+c.guardado,0));
     const sq=sequenciaSemanas(); $('#kSeq').textContent = sq+(sq===1?' semana':' semanas');
@@ -1056,6 +1058,7 @@ window.COFRE_CONFIG = window.COFRE_CONFIG || {
       case 'wp-layout': if(!P().layouts.includes(b.dataset.l)){ abrirPlanos('Este estilo é do Premium'); break; } est.layout=b.dataset.l; renderEstudio(); break;
       case 'planos': abrirPlanos(); break;
       case 'perfil': pedirPerfil(); break;
+      case 'entrar': abrirLogin(); break;
       case 'ciclo': ciclo=b.dataset.c; { const alvo=b.closest('#planosAqui')||b.closest('#maisCorpo'); if(alvo&&alvo.id==='planosAqui'){ alvo.innerHTML=''; alvo.append(blocoPlanos()); } else renderMais(); } break;
       case 'assinar': assinar(b.dataset.p); break;
       case 'mais-ir': telaMais=b.dataset.t; renderMais(); scrollTo(0,0); break;
