@@ -3,505 +3,586 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<link rel="icon" type="image/png" href="media/logo-verde.png">
-<meta property="og:title" content="Live Plys Agency">
-<meta property="og:description" content="Agência de lives no TikTok: treinamento do zero, acompanhamento semanal e bônus por metas. Inscrição gratuita.">
-<meta property="og:image" content="https://liveplysagency.com.br/media/kit.jpg">
 <title>Live Plys Agency</title>
-<meta name="description" content="Agência de lives no TikTok: treinamento do zero, acompanhamento semanal e bônus por metas. Inscrição gratuita.">
+<meta name="description" content="Agência de lives no TikTok do Grupo BNM. Creator Manager só sua, treino desde a primeira live e nada para pagar.">
+<meta property="og:title" content="Live Plys Agency">
+<meta property="og:description" content="Você abre a live. A gente entra na torcida. Agência do Grupo BNM no TikTok LIVE, grátis para entrar.">
+<meta property="og:image" content="https://liveplysagency.com.br/media/kit.jpg">
+<meta name="theme-color" content="#1A0638">
+<link rel="icon" type="image/png" href="media/logo-verde.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Nunito:wght@600;700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800;900&family=Onest:wght@400;500;700&display=swap">
+<link rel="preload" as="image" href="novo/m/batalha-capa.webp">
 <style>
-/* Layout: one dark purple stage, bands stacked like a live room; lime is the only loud color. */
+/* Live Plys: a página inteira é uma sala de live. Uva profunda de base, roxo da marca nas faixas,
+   lima só onde a ação acontece. Momento-assinatura: a batalha "sozinha x com a Plys". */
 :root {
-  --noite: #1E0836;
-  --noite-2: #2A0B47;
+  --uva: #1A0638;
+  --uva-2: #250A4D;
   --roxo: #6C1FAD;
-  --lima: #C0FF72;
-  --texto: #FFFFFF;
-  --suave: #D8C7F2;
-  --linha: rgba(216, 199, 242, 0.18);
-  --display: 'Anton', 'Impact', 'Arial Narrow', sans-serif;
-  --corpo: 'Nunito', 'Trebuchet MS', system-ui, sans-serif;
+  --violeta: #8E3BFF;
+  --lima: #C6FF4D;
+  --rosa: #FF2D6F;
+  --lavanda: #E7DAFF;
+  --suave: #BFA9E8;
+  --linha: rgba(231, 218, 255, 0.16);
+  --display: 'Unbounded', 'Arial Black', system-ui, sans-serif;
+  --corpo: 'Onest', 'Segoe UI', system-ui, sans-serif;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 html, body { margin: 0; }
-img { max-width: 100%; }
+body { background: var(--uva); color: #FFFFFF; font-family: var(--corpo); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 20; background: var(--uva); }
+img, video { max-width: 100%; display: block; }
 [hidden] { display: none !important; }
-body { background: var(--noite); color: var(--texto); font-family: var(--corpo); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--noite); }
-.wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-h1, h2, h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; line-height: 0.98; margin: 0; text-wrap: balance; letter-spacing: 0.005em; }
+h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; line-height: 1.02; letter-spacing: -0.02em; }
 p { margin: 0; }
-a { color: var(--lima); }
-a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid var(--lima); outline-offset: 3px; }
-.pilula { display: inline-block; background: var(--lima); color: var(--noite-2); font-weight: 900; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; padding: 8px 16px; border-radius: 999px; }
-.pilula.roxa { background: var(--roxo); color: var(--lima); }
-.botao { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 28px; border-radius: 999px; font-family: var(--corpo); font-weight: 900; font-size: 17px; text-decoration: none; border: 0; cursor: pointer; transition: transform .15s ease, background .15s ease; }
-.botao:hover { transform: translateY(-2px); }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--lima); outline-offset: 3px; border-radius: 6px; }
+.wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+
+/* Botões */
+.botao { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 56px; padding: 0 30px; border-radius: 999px; font-family: var(--corpo); font-weight: 700; font-size: 17px; text-decoration: none; border: 0; cursor: pointer; transition: transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .18s ease; white-space: nowrap; }
+.botao.lima { background: var(--lima); color: var(--uva); box-shadow: 0 10px 30px -8px rgba(198, 255, 77, 0.55); }
+.botao.lima:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -8px rgba(198, 255, 77, 0.7); }
+.botao.vazado { color: #FFFFFF; box-shadow: inset 0 0 0 2px var(--linha); }
+.botao.vazado:hover { box-shadow: inset 0 0 0 2px var(--lavanda); }
+.botao.uva { background: var(--uva); color: var(--lima); }
+.botao.uva:hover { transform: translateY(-2px); }
 @media (prefers-reduced-motion: reduce) { .botao:hover { transform: none; } }
-.botao.lima { background: var(--lima); color: var(--noite-2); }
-.botao.contorno { background: transparent; color: var(--texto); box-shadow: inset 0 0 0 2px var(--suave); }
 
 /* Topo */
-.topo { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(30, 8, 54, 0.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--linha); }
-.topo .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
-.topo img { width: 112px; height: auto; display: block; }
+.topo { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: rgba(26, 6, 56, 0.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--linha); }
+.topo .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 10px; }
+.topo img { width: 104px; height: auto; }
+.topo nav { display: flex; align-items: center; gap: 28px; font-weight: 500; font-size: 15px; }
+.topo nav a { text-decoration: none; color: var(--lavanda); }
+.topo nav a:hover { color: #FFFFFF; }
 .topo .botao { min-height: 44px; padding: 0 20px; font-size: 15px; }
 
 /* Abertura */
-.abertura .wrap { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 48px; align-items: center; padding-block: 56px 72px; }
-.abertura-texto { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
-.abertura h1 { font-size: clamp(52px, 8.4vw, 104px); }
-.abertura h1 em { font-style: normal; color: var(--lima); }
-.abertura .lead { font-size: 20px; font-weight: 700; color: var(--suave); max-width: 34ch; }
+.abertura { position: relative; isolation: isolate; overflow-x: clip; }
+.abertura::before { content: ""; position: absolute; z-index: -1; right: -10%; top: -20%; width: 70vw; max-width: 900px; aspect-ratio: 1; background: radial-gradient(closest-side, rgba(142, 59, 255, 0.55), rgba(108, 31, 173, 0.18) 55%, transparent 72%); pointer-events: none; }
+.abertura .wrap { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 56px; align-items: center; padding-block: 72px 96px; }
+.abertura-texto { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+.selo-bnm { align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; padding: 6px 14px 6px 6px; border-radius: 999px; background: rgba(142, 59, 255, 0.18); box-shadow: inset 0 0 0 1px rgba(142, 59, 255, 0.45); font-size: 14px; font-weight: 500; color: var(--lavanda); }
+.selo-bnm b { background: var(--lima); color: var(--uva); font-family: var(--display); font-size: 11px; font-weight: 900; padding: 5px 9px; border-radius: 999px; letter-spacing: 0.02em; }
+.abertura h1 { font-size: clamp(34px, 4.5vw, 66px); font-weight: 900; }
+.abertura h1 .l2 { display: block; color: var(--lima); }
+.abertura .lead { font-size: clamp(17px, 1.6vw, 20px); color: var(--lavanda); max-width: 46ch; }
 .acoes { display: flex; flex-wrap: wrap; gap: 12px; }
-.selos { display: flex; flex-wrap: wrap; gap: 8px 20px; padding: 0; margin: 4px 0 0; list-style: none; font-weight: 800; font-size: 15px; }
-.selos li { display: flex; align-items: center; gap: 8px; }
-.selos li::before { content: ""; width: 10px; height: 10px; border-radius: 999px; background: var(--lima); }
-.celular { position: relative; justify-self: center; width: min(320px, 100%); aspect-ratio: 9 / 16; max-width: 100%; border-radius: 40px; padding: 10px; background: #0E0318; box-shadow: 0 0 0 2px var(--roxo), 0 30px 80px rgba(108, 31, 173, 0.55); }
-.celular video { width: 100%; height: 100%; object-fit: cover; border-radius: 30px; display: block; background: var(--noite-2); }
-.celular .ao-vivo { position: absolute; top: 26px; left: 26px; display: flex; align-items: center; gap: 6px; background: #FF2D55; color: #FFFFFF; font-weight: 900; font-size: 12px; letter-spacing: 0.1em; padding: 5px 10px; border-radius: 6px; }
-.celular .ao-vivo::before { content: ""; width: 7px; height: 7px; border-radius: 999px; background: #FFFFFF; animation: pisca 1.2s infinite; }
-@keyframes pisca { 50% { opacity: .2; } }
-@media (prefers-reduced-motion: reduce) { .celular .ao-vivo::before { animation: none; } }
-.som { position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); min-height: 44px; padding: 0 20px; border-radius: 999px; border: 0; background: var(--lima); color: var(--noite-2); font-family: var(--corpo); font-weight: 900; font-size: 15px; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.35); white-space: nowrap; }
+.fatos { display: flex; flex-wrap: wrap; gap: 10px 24px; padding: 0; margin: 0; list-style: none; font-size: 15px; font-weight: 500; color: var(--suave); }
+.fatos li { display: flex; align-items: center; gap: 8px; }
+.fatos svg { flex-shrink: 0; }
 
-/* Resultados */
-.destaque { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 32px; align-items: start; padding: 24px; border-radius: 32px; background: var(--noite-2); box-shadow: 0 0 0 2px var(--roxo); }
-.destaque-video { margin: 0; }
-.destaque-video video { width: 100%; aspect-ratio: 464 / 718; max-width: 100%; border-radius: 22px; background: var(--noite); display: block; object-fit: cover; }
-.destaque-texto { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr); gap: 16px 24px; align-items: start; min-width: 0; }
-.destaque-texto .pilula, .destaque-texto h3, .destaque-texto p { grid-column: 1; }
-.destaque-texto .pilula { justify-self: start; }
-.destaque-texto h3 { font-size: clamp(36px, 4.4vw, 54px); }
-.destaque-texto h3 em { font-style: normal; color: var(--lima); }
-.destaque-texto p { color: var(--suave); font-weight: 700; }
-.destaque-texto .peca { grid-column: 2; grid-row: 1 / span 4; }
-.mural { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
-.ganhos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.peca { margin: 0; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-.peca img { width: 100%; height: auto; display: block; border-radius: 18px; box-shadow: 0 0 0 2px var(--linha); }
-.peca.alta img { aspect-ratio: 3 / 4.6; object-fit: cover; object-position: top; }
-.peca figcaption { display: flex; flex-direction: column; gap: 2px; }
-.peca strong { font-size: 17px; font-weight: 900; }
-.peca span { font-size: 14px; color: var(--suave); font-weight: 700; }
-
-/* Fotos novas */
-.palco { position: relative; justify-self: center; width: min(560px, 100%); display: flex; justify-content: center; padding-block: 24px; }
-.palco .celular { position: relative; z-index: 1; }
-.cartao-foto { position: absolute; z-index: 0; width: 190px; height: auto; aspect-ratio: 3 / 4; max-width: 40%; object-fit: cover; border-radius: 24px; border: 4px solid var(--noite); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45); }
-.cartao-a { left: -70px; bottom: 60px; transform: rotate(-8deg); }
-.cartao-b { right: -70px; top: 50px; transform: rotate(7deg); }
-.abertura { overflow-x: clip; }
-.foto-arco { margin: 0; }
-.foto-arco img { width: 100%; height: auto; aspect-ratio: 3 / 4; max-width: 100%; object-fit: cover; display: block; border-radius: 999px 999px 28px 28px; }
-.foto-arco.pequena { width: 100%; max-width: 300px; margin-top: 22px; }
-.beneficios-bloco { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr); gap: 44px; align-items: center; }
-.beneficios-bloco .beneficios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.onda { position: absolute; z-index: -1; right: -60px; bottom: 40px; width: 360px; height: auto; }
+/* Tela da live */
+.tela { position: relative; justify-self: center; width: min(380px, 100%); }
+.tela-video { position: relative; aspect-ratio: 9 / 16; max-width: 100%; border-radius: 32px; overflow: hidden; background: var(--uva-2); box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 40px 100px -20px rgba(142, 59, 255, 0.75); transform: rotate(2.5deg); }
+.tela-video video { width: 100%; height: 100%; object-fit: cover; }
+.tela-video::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(26,6,56,0.55) 0%, transparent 22%, transparent 70%, rgba(26,6,56,0.7) 100%); pointer-events: none; }
+.tela-topo { position: absolute; z-index: 2; top: 16px; left: 16px; right: 16px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.perfil { display: flex; align-items: center; gap: 8px; padding: 4px 12px 4px 4px; border-radius: 999px; background: rgba(0,0,0,0.38); backdrop-filter: blur(6px); font-size: 13px; font-weight: 700; }
+.perfil img { width: 28px; height: 28px; border-radius: 999px; background: var(--uva); object-fit: contain; padding: 3px; }
+.ao-vivo { display: inline-flex; align-items: center; gap: 6px; background: var(--rosa); color: #FFFFFF; font-weight: 700; font-size: 12px; padding: 5px 10px; border-radius: 6px; }
+.ao-vivo::before { content: ""; width: 7px; height: 7px; border-radius: 999px; background: #FFFFFF; animation: pisca 1.2s infinite; }
+@keyframes pisca { 50% { opacity: .25; } }
+/* presentes subindo, como na live */
+.presentes { position: absolute; z-index: 2; right: 14px; bottom: 18px; width: 56px; height: 62%; pointer-events: none; }
+.presentes span { position: absolute; bottom: 0; left: 50%; width: 30px; height: 30px; margin-left: -15px; opacity: 0; animation: sobe 4.2s cubic-bezier(.3,.6,.4,1) infinite; }
+.presentes span:nth-child(2) { animation-delay: .7s; }
+.presentes span:nth-child(3) { animation-delay: 1.4s; }
+.presentes span:nth-child(4) { animation-delay: 2.1s; }
+.presentes span:nth-child(5) { animation-delay: 2.8s; }
+.presentes span:nth-child(6) { animation-delay: 3.5s; }
+@keyframes sobe {
+  0% { transform: translate(0, 0) scale(.5); opacity: 0; }
+  12% { opacity: 1; transform: translate(-6px, -30px) scale(1); }
+  50% { transform: translate(8px, -45%) scale(1); }
+  85% { opacity: .9; }
+  100% { transform: translate(-10px, -330%) scale(.8); opacity: 0; }
+}
+.cartela { position: absolute; z-index: 3; left: -36px; bottom: 64px; display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 18px; background: var(--lavanda); color: var(--uva); box-shadow: 0 20px 50px -12px rgba(0,0,0,0.6); transform: rotate(-3deg); max-width: 290px; }
+.cartela b { display: block; font-family: var(--display); font-size: 14px; font-weight: 800; line-height: 1.15; }
+.cartela small { display: block; font-size: 13px; font-weight: 500; color: var(--roxo); }
+.cartela .icone { flex-shrink: 0; width: 40px; height: 40px; border-radius: 12px; background: var(--roxo); display: grid; place-items: center; }
+@media (prefers-reduced-motion: reduce) {
+  .ao-vivo::before, .presentes span { animation: none; }
+  .presentes { display: none; }
+}
 
 /* Seções */
-.secao .wrap { padding-block: 72px; display: flex; flex-direction: column; gap: 36px; }
-.cabeca { display: flex; flex-direction: column; gap: 14px; max-width: 720px; }
-.cabeca h2 { font-size: clamp(40px, 6vw, 68px); }
-.cabeca h2 em { font-style: normal; color: var(--lima); }
-.cabeca p { color: var(--suave); font-size: 18px; font-weight: 700; max-width: 60ch; }
-.faixa { background: var(--noite-2); }
+.secao { padding-block: 104px; }
+.secao.escura { background: var(--uva-2); }
+.cabeca { display: flex; flex-direction: column; gap: 16px; max-width: 760px; margin-bottom: 48px; }
+.cabeca h2 { font-size: clamp(26px, 3.4vw, 46px); font-weight: 800; }
+.cabeca p { color: var(--lavanda); font-size: 18px; max-width: 58ch; }
+.nota { font-size: 14px; color: var(--suave); margin-top: 24px; max-width: 70ch; }
 
-/* Provas */
-.rolagem { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(220px, 260px); gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; scrollbar-color: var(--roxo) transparent; }
-.prova { scroll-snap-align: start; display: flex; flex-direction: column; gap: 12px; margin: 0; }
-.prova video { width: 100%; aspect-ratio: 9 / 16; max-width: 100%; object-fit: cover; border-radius: 22px; background: var(--noite); display: block; box-shadow: 0 0 0 2px var(--linha); }
-.prova figcaption { display: flex; flex-direction: column; gap: 2px; }
-.prova strong { font-size: 17px; font-weight: 900; }
-.prova span { font-size: 14px; color: var(--suave); font-weight: 700; }
-.dica-rolar { font-size: 14px; color: var(--suave); font-weight: 700; }
+/* Hosts: vídeos reais em fila, como stories */
+.fila { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(220px, 250px); gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 4px 16px; margin-inline: -4px; scrollbar-width: thin; scrollbar-color: var(--roxo) transparent; }
+.story { scroll-snap-align: start; margin: 0; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.story-midia { position: relative; aspect-ratio: 9 / 16; max-width: 100%; border-radius: 24px; overflow: hidden; background: var(--uva); box-shadow: 0 0 0 1px var(--linha); }
+.story-midia img, .story-midia video { width: 100%; height: 100%; object-fit: cover; }
+.story-play { position: absolute; inset: 0; display: grid; place-items: center; border: 0; padding: 0; background: linear-gradient(180deg, transparent 55%, rgba(26,6,56,0.75)); cursor: pointer; color: #FFFFFF; }
+.story-play span { width: 64px; height: 64px; border-radius: 999px; background: rgba(255,255,255,0.18); backdrop-filter: blur(8px); display: grid; place-items: center; transition: transform .18s ease, background .18s ease; }
+.story-play:hover span { transform: scale(1.08); background: var(--lima); color: var(--uva); }
+.story figcaption b { display: block; font-weight: 700; font-size: 16px; }
+.story figcaption span { font-size: 14px; color: var(--suave); }
+.dica { font-size: 14px; color: var(--suave); margin-top: 8px; }
 
-/* Passos */
-.passos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; padding: 0; margin: 0; list-style: none; counter-reset: passo; }
-.passos li { counter-increment: passo; display: flex; flex-direction: column; gap: 10px; padding: 24px; border-radius: 24px; background: var(--noite-2); min-width: 0; }
-.passos li::before { content: counter(passo); font-family: var(--display); font-size: 56px; line-height: 1; color: var(--lima); }
-.passos strong { font-size: 19px; font-weight: 900; }
-.passos p { color: var(--suave); font-size: 15px; font-weight: 700; }
-.faixa .passos li { background: var(--noite); }
+/* Resultados */
+.top1 { display: grid; grid-template-columns: minmax(0, 0.75fr) minmax(0, 1fr) minmax(0, 0.7fr); gap: 32px; align-items: center; }
+.top1 .story-midia { aspect-ratio: 464 / 718; }
+.top1-texto { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.top1-texto h3 { font-size: clamp(26px, 3vw, 40px); font-weight: 800; }
+.numero-grande { font-family: var(--display); font-weight: 900; font-size: clamp(48px, 6vw, 84px); line-height: .9; color: var(--lima); letter-spacing: -0.04em; }
+.top1-texto p { color: var(--lavanda); }
+.print { margin: 0; border-radius: 20px; overflow: hidden; background: #FFFFFF; box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6); transform: rotate(2deg); }
+.print img { width: 100%; height: auto; }
+.placas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 64px; }
+.placa { margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.placa img { width: 100%; height: auto; aspect-ratio: 4 / 5; max-width: 100%; object-fit: cover; object-position: center 30%; border-radius: 24px; }
+.placa figcaption b { display: block; font-family: var(--display); font-weight: 800; font-size: 18px; }
+.placa figcaption span { font-size: 14px; color: var(--suave); }
+.ganhos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+.ganhos img { width: 100%; height: auto; border-radius: 16px; box-shadow: 0 0 0 1px var(--linha); }
+
+/* Batalha: o momento-assinatura */
+.batalha { background: var(--lima); color: var(--uva); }
+.batalha .cabeca p { color: var(--uva); opacity: .8; }
+.placar { display: flex; flex-direction: column; gap: 14px; margin-bottom: 40px; }
+.placar-nomes { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; font-family: var(--display); font-weight: 800; font-size: clamp(16px, 2vw, 22px); }
+.placar-nomes .pts { font-size: clamp(32px, 4.5vw, 56px); font-weight: 900; line-height: 1; display: block; }
+.placar-nomes div:last-child { text-align: right; }
+.barra { position: relative; display: flex; height: 28px; border-radius: 999px; overflow: hidden; background: var(--uva); box-shadow: 0 0 0 3px var(--uva); }
+.barra .lado-a { width: 50%; background: var(--rosa); transition: width 1.6s cubic-bezier(.2,.8,.2,1); }
+.barra .lado-b { flex: 1; background: linear-gradient(90deg, var(--roxo), var(--violeta)); }
+.barra .faisca { position: absolute; top: 50%; left: 50%; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 999px; background: #FFFFFF; display: grid; place-items: center; box-shadow: 0 0 0 4px var(--uva); transition: left 1.6s cubic-bezier(.2,.8,.2,1); font-family: var(--display); font-weight: 900; font-size: 12px; color: var(--uva); }
+.batalha.lutou .barra .lado-a { width: 12%; }
+.batalha.lutou .barra .faisca { left: 12%; }
+.vitoria { position: absolute; right: 18px; top: 50%; transform: translateY(-50%) scale(.6); opacity: 0; font-family: var(--display); font-weight: 900; font-size: 13px; color: var(--lima); letter-spacing: .04em; transition: opacity .4s ease 1.5s, transform .4s cubic-bezier(.3,1.6,.5,1) 1.5s; }
+.batalha.lutou .vitoria { opacity: 1; transform: translateY(-50%) scale(1); }
+@media (prefers-reduced-motion: reduce) { .barra .lado-a, .barra .faisca, .vitoria { transition: none; } }
+.rounds { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; border-top: 2px solid var(--uva); }
+.round { display: grid; grid-template-columns: minmax(0, 0.55fr) minmax(0, 1fr) minmax(0, 1.25fr); gap: 24px; padding-block: 22px; border-bottom: 2px solid rgba(26, 6, 56, 0.18); align-items: baseline; }
+.round h3 { font-size: 18px; font-weight: 800; }
+.round .sozinha { color: rgba(26, 6, 56, 0.68); text-decoration: line-through; text-decoration-color: var(--rosa); text-decoration-thickness: 2px; }
+.round .plys { font-weight: 700; }
+.batalha-pe { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; margin-top: 40px; }
+.batalha-pe p { font-family: var(--display); font-weight: 800; font-size: clamp(18px, 2.2vw, 26px); }
+
+/* Fundadora */
+.fundadora { background: var(--roxo); position: relative; overflow: hidden; isolation: isolate; }
+.fundadora::before { content: ""; position: absolute; z-index: -1; inset: auto -20% -60% auto; width: 80vw; max-width: 900px; aspect-ratio: 1; border-radius: 999px; background: radial-gradient(closest-side, rgba(198, 255, 77, 0.22), transparent 70%); }
+.fundadora .wrap { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 64px; align-items: start; }
+.fundadora .cabeca { margin-bottom: 0; position: sticky; top: 110px; }
+.fundadora .cabeca p { color: #F2EAFF; }
+.linha-tempo { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; position: relative; }
+.linha-tempo::before { content: ""; position: absolute; left: 11px; top: 14px; bottom: 14px; width: 2px; background: rgba(231, 218, 255, 0.35); }
+.linha-tempo li { position: relative; padding: 0 0 36px 52px; }
+.linha-tempo li::before { content: ""; position: absolute; left: 4px; top: 6px; width: 16px; height: 16px; border-radius: 999px; background: var(--roxo); box-shadow: 0 0 0 3px var(--lavanda); }
+.linha-tempo li:last-child::before { background: var(--lima); box-shadow: 0 0 0 3px var(--lima), 0 0 24px 4px rgba(198, 255, 77, 0.6); }
+.linha-tempo b { display: block; font-family: var(--display); font-weight: 800; font-size: clamp(18px, 2vw, 26px); line-height: 1.15; }
+.linha-tempo span { display: block; margin-top: 6px; color: #F2EAFF; }
 
 /* Benefícios */
-.beneficios { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--linha); }
-.beneficio { display: flex; flex-direction: column; gap: 8px; padding: 26px 24px 26px 0; border-bottom: 1px solid var(--linha); min-width: 0; }
-.beneficio h3 { font-size: 30px; color: var(--lima); }
-.beneficio p { color: var(--suave); font-weight: 700; font-size: 16px; max-width: 36ch; }
+.beneficios { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 40px; }
+.beneficio { display: flex; flex-direction: column; gap: 8px; padding-block: 28px; border-top: 1px solid var(--linha); min-width: 0; }
+.beneficio h3 { font-size: 19px; font-weight: 800; color: var(--lima); }
+.beneficio p { color: var(--lavanda); font-size: 16px; }
+.beneficios-foto { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr); gap: 56px; align-items: center; }
+.arco { margin: 0; }
+.arco img { width: 100%; height: auto; aspect-ratio: 3 / 4; max-width: 100%; object-fit: cover; border-radius: 999px 999px 32px 32px; }
+.arco figcaption { font-size: 13px; color: var(--suave); margin-top: 8px; }
 
-/* Momentos de live */
-.momentos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-.momento { position: relative; margin: 0; border-radius: 24px; overflow: hidden; aspect-ratio: 3 / 4; max-width: 100%; background: var(--noite-2); }
-.momento img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.momento figcaption { position: absolute; left: 12px; bottom: 12px; }
-.nota { font-size: 13px; color: var(--suave); font-weight: 700; }
+/* Como entrar (sequência de verdade) */
+.passos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: p; }
+.passos li { counter-increment: p; display: flex; flex-direction: column; gap: 10px; padding: 28px 24px; border-radius: 24px; background: var(--uva); box-shadow: inset 0 0 0 1px var(--linha); min-width: 0; }
+.passos li::before { content: counter(p); font-family: var(--display); font-weight: 900; font-size: 44px; line-height: 1; color: var(--lima); }
+.passos b { font-size: 18px; }
+.passos p { color: var(--lavanda); font-size: 15px; }
 
-/* Requisitos e FAQ */
-.secao .wrap.duas, .duas { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 48px; align-items: start; }
-.lista-check { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; font-size: 18px; font-weight: 800; }
-.lista-check li { display: flex; gap: 14px; align-items: flex-start; }
-.lista-check li::before { content: "✓"; flex-shrink: 0; width: 30px; height: 30px; border-radius: 999px; background: var(--lima); color: var(--noite-2); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; }
-.faq { display: flex; flex-direction: column; border-top: 1px solid var(--linha); }
-.faq details { border-bottom: 1px solid var(--linha); }
-.faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; padding: 18px 0; font-weight: 900; font-size: 18px; }
-.faq summary::-webkit-details-marker { display: none; }
-.faq summary::after { content: "+"; font-family: var(--display); font-size: 26px; line-height: 1; color: var(--lima); }
-.faq details[open] summary::after { content: "–"; }
-.faq details p { padding-bottom: 18px; color: var(--suave); font-weight: 700; max-width: 62ch; }
+/* Requisitos + dúvidas em formato de chat */
+.duas { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 64px; align-items: start; }
+.checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; font-size: 18px; font-weight: 500; }
+.checks li { display: flex; gap: 14px; align-items: flex-start; }
+.checks li::before { content: ""; flex-shrink: 0; width: 28px; height: 28px; border-radius: 999px; background: var(--lima) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231A0638' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 16px no-repeat; }
+.chat { display: flex; flex-direction: column; gap: 12px; padding: 24px; border-radius: 28px; background: var(--uva-2); box-shadow: inset 0 0 0 1px var(--linha); }
+.chat-topo { display: flex; align-items: center; gap: 10px; padding-bottom: 14px; border-bottom: 1px solid var(--linha); font-weight: 700; }
+.chat-topo small { font-weight: 400; color: var(--suave); display: block; font-size: 13px; }
+.chat-topo img { width: 40px; height: 40px; border-radius: 999px; background: var(--uva); object-fit: contain; padding: 5px; }
+.chat details { display: flex; flex-direction: column; }
+.chat summary { list-style: none; cursor: pointer; align-self: flex-end; margin-left: auto; max-width: 82%; padding: 12px 16px; border-radius: 20px 20px 6px 20px; background: var(--roxo); font-weight: 500; width: fit-content; }
+.chat summary::-webkit-details-marker { display: none; }
+.chat summary::after { content: " +"; color: var(--lima); font-weight: 700; }
+.chat details[open] summary::after { content: ""; }
+.chat details p { margin-top: 8px; max-width: 86%; padding: 12px 16px; border-radius: 20px 20px 20px 6px; background: var(--lavanda); color: var(--uva); }
 
-/* Formulário */
-.inscricao { background: var(--roxo); }
-.inscricao .wrap { padding-block: 72px; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 48px; align-items: start; }
-.inscricao .cabeca p { color: #F1E8FF; }
-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; background: var(--noite); padding: 28px; border-radius: 28px; }
-.campo { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.campo.largo { grid-column: 1 / -1; }
-label { font-weight: 900; font-size: 15px; }
-input, select { width: 100%; min-height: 50px; padding: 0 16px; border-radius: 14px; border: 2px solid var(--linha); background: var(--noite-2); color: var(--texto); font-family: var(--corpo); font-size: 16px; font-weight: 700; }
-input::placeholder { color: rgba(216, 199, 242, 0.55); }
-input:focus, select:focus { border-color: var(--lima); outline: none; }
-.erro { grid-column: 1 / -1; color: #FFB4C4; font-weight: 800; font-size: 15px; min-height: 0; }
-form .botao { grid-column: 1 / -1; width: 100%; }
-.pronto { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 12px; padding: 18px; border-radius: 18px; background: var(--noite-2); }
-.pronto p { font-weight: 800; }
-.numero { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-weight: 800; color: var(--suave); }
-.numero code { font-family: var(--corpo); font-size: 17px; color: var(--texto); user-select: all; }
-.copiar { min-height: 36px; padding: 0 14px; border-radius: 999px; border: 2px solid var(--suave); background: transparent; color: var(--texto); font-weight: 800; font-family: var(--corpo); cursor: pointer; }
+/* Fechamento */
+.final { background: var(--uva); padding-block: 120px; text-align: left; position: relative; overflow: hidden; isolation: isolate; }
+.final::before { content: ""; position: absolute; z-index: -1; left: 50%; top: 50%; width: 120vw; max-width: 1400px; aspect-ratio: 2 / 1; transform: translate(-50%, -50%); background: radial-gradient(closest-side, rgba(142, 59, 255, 0.5), transparent 70%); }
+.final .wrap { display: flex; flex-direction: column; gap: 28px; align-items: flex-start; }
+.final h2 { font-size: clamp(32px, 5vw, 72px); font-weight: 900; max-width: 16ch; }
+.final h2 .l2 { display: block; color: var(--lima); }
+.final p { color: var(--lavanda); font-size: 18px; max-width: 52ch; }
+.contato { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; color: var(--suave); font-size: 15px; }
+.contato code { font-family: var(--corpo); color: #FFFFFF; font-weight: 700; user-select: all; }
+.copiar { min-height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--linha); background: transparent; color: #FFFFFF; font-family: var(--corpo); font-weight: 500; cursor: pointer; }
 
 /* Rodapé */
+.rodape { border-top: 1px solid var(--linha); }
 .rodape .wrap { padding-block: 48px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; }
-.rodape img { width: 150px; height: auto; display: block; }
-.redes { display: flex; flex-wrap: wrap; gap: 10px; }
-.redes a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: var(--noite-2); color: var(--texto); text-decoration: none; font-weight: 800; font-size: 15px; }
-.redes a:hover { background: var(--roxo); }
-.legal { width: 100%; font-size: 13px; color: var(--suave); font-weight: 700; }
+.rodape img { width: 140px; height: auto; }
+.redes { display: flex; flex-wrap: wrap; gap: 8px; }
+.redes a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--linha); text-decoration: none; font-weight: 500; font-size: 15px; }
+.redes a:hover { background: var(--uva-2); }
+.legal { width: 100%; font-size: 13px; color: var(--suave); max-width: 90ch; }
 
-@media (max-width: 900px) {
-  .abertura .wrap, .secao .wrap.duas, .inscricao .wrap { grid-template-columns: minmax(0, 1fr); }
-  .abertura .wrap { padding-block: 36px 56px; gap: 40px; }
-  .passos, .momentos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .ganhos { grid-template-columns: minmax(0, 1fr); max-width: 520px; }
-  .destaque { grid-template-columns: minmax(0, 1fr); }
-  .beneficios-bloco { grid-template-columns: minmax(0, 1fr); }
-  .beneficios-bloco .foto-arco { max-width: 320px; width: 100%; justify-self: center; }
-  .destaque-video { max-width: 380px; width: 100%; justify-self: center; }
+/* Barra fixa no celular */
+.fixo { display: none; }
+
+@media (max-width: 980px) {
+  .topo nav a:not(.botao) { display: none; }
+  .abertura .wrap { grid-template-columns: minmax(0, 1fr); padding-block: 40px 72px; gap: 48px; }
+  .tela { width: min(330px, 82%); }
+  .top1 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .top1-texto { grid-column: 1 / -1; grid-row: 1; }
+  .round { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px 20px; }
+  .round h3 { grid-column: 1 / -1; }
+  .fundadora .wrap, .duas, .beneficios-foto { grid-template-columns: minmax(0, 1fr); gap: 48px; }
+  .fundadora .cabeca { position: static; }
+  .beneficios-foto .arco { max-width: 300px; }
   .beneficios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .passos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-@media (max-width: 560px) {
-  .topo img { width: 96px; }
-  .passos { grid-template-columns: minmax(0, 1fr); }
-  .beneficios { grid-template-columns: minmax(0, 1fr); }
-  form { grid-template-columns: minmax(0, 1fr); padding: 20px; }
-  .mural { grid-template-columns: minmax(0, 1fr); }
-  .beneficios-bloco .beneficios { grid-template-columns: minmax(0, 1fr); }
-  .cartao-foto { width: 120px; border-width: 3px; border-radius: 18px; }
-  .cartao-a { left: -6px; bottom: 40px; }
-  .cartao-b { right: -6px; top: 40px; }
-  .palco .celular { width: min(250px, 66%); }
-  .destaque { padding: 16px; }
-  .destaque-texto { grid-template-columns: minmax(0, 1fr); }
-  .destaque-texto .peca { grid-column: 1; grid-row: auto; max-width: 340px; }
-  .secao .wrap, .inscricao .wrap { padding-block: 56px; }
+@media (max-width: 600px) {
+  body { font-size: 16px; padding-bottom: 84px; }
+  .topo img { width: 92px; }
+  .secao { padding-block: 72px; }
+  .cabeca { margin-bottom: 36px; }
   .acoes .botao { width: 100%; }
+  .cartela { left: -14px; bottom: 40px; max-width: 210px; padding: 10px 12px; }
+  .cartela b { font-size: 13px; }
+  .top1 { grid-template-columns: minmax(0, 1fr); }
+  .top1 .story-midia, .print { max-width: 340px; width: 100%; }
+  .placas { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+  .placas .placa:last-child { grid-column: 1 / -1; }
+  .ganhos { grid-template-columns: minmax(0, 1fr); max-width: 420px; }
+  .round { grid-template-columns: minmax(0, 1fr); }
+  .beneficios, .passos { grid-template-columns: minmax(0, 1fr); }
+  .chat { padding: 16px; }
+  .chat summary, .chat details p { max-width: 92%; }
+  .final { padding-block: 88px; }
+  .final .botao { width: 100%; }
+  .fixo { display: flex; position: fixed; z-index: 15; left: 0; right: 0; bottom: 0; padding: 12px max(16px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); background: rgba(26, 6, 56, 0.92); backdrop-filter: blur(12px); border-top: 1px solid var(--linha); transform: translateY(110%); transition: transform .25s ease; }
+  .fixo.ver { transform: none; }
+  .fixo .botao { width: 100%; }
 }
 </style>
-
 </head>
 <body>
+
 <header class="topo">
   <div class="wrap">
     <a href="#inicio" aria-label="Live Plys Agency, voltar ao início"><img src="media/logo-verde.png" alt="Live Plys Agency" width="710" height="319"></a>
-    <a class="botao lima" href="#inscricao">Quero ser agenciada</a>
+    <nav aria-label="Seções">
+      <a href="#hosts">Hosts</a>
+      <a href="#batalha">Por que a Plys</a>
+      <a href="#como-entrar">Como entrar</a>
+      <a class="botao lima" href="chat/">Quero ser agenciada</a>
+    </nav>
   </div>
 </header>
 
 <main id="inicio">
+
   <section class="abertura">
     <div class="wrap">
       <div class="abertura-texto">
-        <span class="pilula roxa">Agência de lives no TikTok</span>
-        <h1>Sua live vira <em>renda</em> quando alguém caminha com você</h1>
-        <p class="lead">Treinamento do zero, acompanhamento toda semana e bônus em dólar por metas. Sem pagar nada.</p>
+        <span class="selo-bnm"><b>BNM</b> Agência do Grupo BNM no TikTok LIVE</span>
+        <h1>Você abre a live.<span class="l2">A gente entra na torcida.</span></h1>
+        <p class="lead">Uma Creator Manager só sua, aula antes da primeira live, batalhas com as outras hosts da casa e nada para pagar. Você cuida do carisma; o resto a gente faz junto.</p>
         <div class="acoes">
-          <a class="botao lima" href="#inscricao">Fazer minha inscrição</a>
-          <a class="botao contorno" href="#provas">Ver nossas hosts</a>
+          <a class="botao lima" href="chat/">Quero ser agenciada</a>
+          <a class="botao vazado" href="#hosts">Ver as hosts</a>
         </div>
-        <ul class="selos">
-          <li>Inscrição gratuita</li>
-          <li>Sem taxa sobre seus diamantes</li>
-          <li>Pode começar do zero</li>
+        <ul class="fatos">
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C6FF4D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Grátis para entrar</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C6FF4D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Nunca pedimos sua senha</li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C6FF4D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Pode começar do zero</li>
         </ul>
       </div>
-      <div class="palco">
-      <img class="cartao-foto cartao-a" src="media/live-asiatica.jpg" alt="" width="720" height="960">
-      <img class="cartao-foto cartao-b" src="media/live-loira.jpg" alt="" width="720" height="960">
-      <div class="celular">
-        <video id="video-topo" src="media/batalha.mp4" poster="media/batalha-capa.jpg" autoplay muted loop playsinline aria-label="Host da Live Plys recebendo presentes numa batalha ao vivo"></video>
-        <span class="ao-vivo">AO VIVO</span>
-        <button class="som" id="som" type="button" aria-pressed="false">Ativar som</button>
-      </div>
+
+      <div class="tela">
+        <div class="tela-video">
+          <video src="novo/m/batalha-leve.mp4" poster="novo/m/batalha-capa.webp" autoplay muted loop playsinline preload="auto" aria-label="Host da Live Plys numa batalha ao vivo no TikTok, recebendo presentes"></video>
+          <div class="tela-topo">
+            <span class="perfil"><img src="media/logo-verde.png" alt="" width="28" height="28">Host Plys</span>
+            <span class="ao-vivo">AO VIVO</span>
+          </div>
+          <div class="presentes" aria-hidden="true">
+            <span><svg viewBox="0 0 24 24" width="30" height="30"><path fill="#FF2D6F" d="M12 21s-7.5-4.6-9.6-9.4C1 8.3 3 5 6.3 5c2 0 3.4 1.1 4.2 2.4h3C14.3 6.1 15.7 5 17.7 5 21 5 23 8.3 21.6 11.6 19.5 16.4 12 21 12 21z"/></svg></span>
+            <span><svg viewBox="0 0 24 24" width="30" height="30"><path fill="#C6FF4D" d="M6 3h12l4 6-10 12L2 9z"/><path fill="#1A0638" opacity=".25" d="M2 9h20L12 21z"/></svg></span>
+            <span><svg viewBox="0 0 24 24" width="30" height="30"><path fill="#E7DAFF" d="M12 21s-7.5-4.6-9.6-9.4C1 8.3 3 5 6.3 5c2 0 3.4 1.1 4.2 2.4h3C14.3 6.1 15.7 5 17.7 5 21 5 23 8.3 21.6 11.6 19.5 16.4 12 21 12 21z"/></svg></span>
+            <span><svg viewBox="0 0 24 24" width="30" height="30"><path fill="#8E3BFF" d="M6 3h12l4 6-10 12L2 9z"/><path fill="#FFFFFF" opacity=".3" d="M6 3h6l-3 6H2z"/></svg></span>
+            <span><svg viewBox="0 0 24 24" width="30" height="30"><path fill="#FF2D6F" d="M12 21s-7.5-4.6-9.6-9.4C1 8.3 3 5 6.3 5c2 0 3.4 1.1 4.2 2.4h3C14.3 6.1 15.7 5 17.7 5 21 5 23 8.3 21.6 11.6 19.5 16.4 12 21 12 21z"/></svg></span>
+            <span><svg viewBox="0 0 24 24" width="30" height="30"><path fill="#C6FF4D" d="M6 3h12l4 6-10 12L2 9z"/></svg></span>
+          </div>
+        </div>
+        <div class="cartela">
+          <span class="icone" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C6FF4D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></span>
+          <span><b>Creator Manager</b><small>acompanha suas lives e responde todo dia</small></span>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="secao faixa" id="provas">
+  <section class="secao escura" id="hosts">
     <div class="wrap">
       <div class="cabeca">
-        <span class="pilula">Prova real</span>
-        <h2>Quem está com a gente <em>mostra</em></h2>
-        <p>Vídeos das nossas hosts: batalhas, prêmios, placas de conquista e o kit que chega em casa.</p>
+        <h2>Quem já está com a gente mostra como é</h2>
+        <p>Vídeos gravados pelas nossas hosts, publicados com autorização delas: o kit que chega em casa, as placas, o depoimento.</p>
       </div>
-      <div class="rolagem" tabindex="0" aria-label="Vídeos das hosts da Live Plys">
-        <figure class="prova">
-          <video src="media/kit.mp4" poster="media/kit.jpg" controls playsinline preload="none"></video>
-          <figcaption><strong>Kit das destaques</strong><span>Prêmio para quem se destacou no mês</span></figcaption>
+      <div class="fila" tabindex="0" aria-label="Vídeos das hosts da Live Plys. Arraste para o lado.">
+        <figure class="story">
+          <div class="story-midia" data-video="media/depoimento.mp4"><img src="novo/m/depoimento.webp" alt="" loading="lazy" width="720" height="1280"><button class="story-play" type="button" aria-label="Assistir: depoimento de host"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></button></div>
+          <figcaption><b>"Mimos que recebi da agência"</b><span>Depoimento de host</span></figcaption>
         </figure>
-        <figure class="prova">
-          <video src="media/kit-host.mp4" poster="media/kit-host.jpg" controls playsinline preload="none"></video>
-          <figcaption><strong>Kit de boas-vindas</strong><span>A surpresa que chega em casa</span></figcaption>
+        <figure class="story">
+          <div class="story-midia" data-video="media/kit-host.mp4"><img src="novo/m/kit-host.webp" alt="" loading="lazy" width="720" height="1280"><button class="story-play" type="button" aria-label="Assistir: kit de boas-vindas"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></button></div>
+          <figcaption><b>A caixa que chega em casa</b><span>Kit de boas-vindas</span></figcaption>
         </figure>
-        <figure class="prova">
-          <video src="media/depoimento.mp4" poster="media/depoimento.jpg" controls playsinline preload="none"></video>
-          <figcaption><strong>"Eles valem a pena"</strong><span>Depoimento de host</span></figcaption>
+        <figure class="story">
+          <div class="story-midia" data-video="media/placa-mes.mp4"><img src="novo/m/placa-mes.webp" alt="" loading="lazy" width="720" height="1280"><button class="story-play" type="button" aria-label="Assistir: placa de um milhão"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></button></div>
+          <figcaption><b>A placa de um milhão</b><span>Conquista do mês</span></figcaption>
         </figure>
-        <figure class="prova">
-          <video src="media/placa-mes.mp4" poster="media/placa-mes.jpg" controls playsinline preload="none"></video>
-          <figcaption><strong>Conquista do mês</strong><span>Placa de reconhecimento</span></figcaption>
+        <figure class="story">
+          <div class="story-midia" data-video="media/placa-300k.mp4"><img src="novo/m/placa-300k.webp" alt="" loading="lazy" width="720" height="1280"><button class="story-play" type="button" aria-label="Assistir: placa de 300 mil"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></button></div>
+          <figcaption><b>Meta batida, placa na mão</b><span>Placa de 300 mil</span></figcaption>
         </figure>
-        <figure class="prova">
-          <video src="media/placa-300k.mp4" poster="media/placa-300k.jpg" controls playsinline preload="none"></video>
-          <figcaption><strong>Placa de 300K</strong><span>Meta batida, placa na mão</span></figcaption>
+        <figure class="story">
+          <div class="story-midia" data-video="media/kit.mp4"><img src="novo/m/kit.webp" alt="" loading="lazy" width="720" height="1280"><button class="story-play" type="button" aria-label="Assistir: kit das agenciadas"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></button></div>
+          <figcaption><b>Caixas prontas para as agenciadas</b><span>Prêmio de quem se destaca</span></figcaption>
         </figure>
       </div>
-      <p class="dica-rolar">Arraste para o lado e toque para assistir com som.</p>
+      <p class="dica">Arraste para o lado e toque para assistir com som.</p>
     </div>
   </section>
 
   <section class="secao" id="resultados">
     <div class="wrap">
       <div class="cabeca">
-        <span class="pilula">Resultados reais</span>
-        <h2>Ranking, placas e <em>ganhos</em> das nossas hosts</h2>
-        <p>Tudo aqui é de hosts da Live Plys, compartilhado com autorização delas.</p>
+        <h2>Placa na parede, nome no topo do ranking</h2>
+        <p>Tudo aqui é de hosts da Live Plys, mostrado com autorização delas.</p>
       </div>
-      <div class="destaque">
-        <figure class="destaque-video">
-          <video src="media/dia-top1.mp4" poster="media/dia-top1.jpg" controls playsinline preload="none"></video>
-        </figure>
-        <div class="destaque-texto">
-          <span class="pilula roxa">O dia do Top 1</span>
-          <h3>Nossa host em <em>1º lugar</em> no ranking diário</h3>
-          <p>No vídeo, a live do dia em que ela chegou ao topo. Ao lado, o print da classificação: mais de 1 milhão de diamantes no dia e 683,7 mil à frente da segunda colocada.</p>
-          <figure class="peca"><img src="media/ranking-top1.jpg" alt="Classificação diária do TikTok LIVE com uma host da Live Plys em 1º lugar" loading="lazy" width="588" height="934"></figure>
+      <div class="top1">
+        <div class="story">
+          <div class="story-midia" data-video="media/dia-top1.mp4"><img src="novo/m/dia-top1.webp" alt="" loading="lazy" width="464" height="718"><button class="story-play" type="button" aria-label="Assistir: a live do dia em que a host ficou em 1º lugar"><span><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></button></div>
         </div>
+        <div class="top1-texto">
+          <span class="numero-grande">1º lugar</span>
+          <h3>no ranking diário do TikTok LIVE</h3>
+          <p>No vídeo, a live do dia em que ela chegou ao topo. No print, a classificação: mais de 1 milhão de diamantes no dia e 683,7 mil à frente da segunda colocada.</p>
+        </div>
+        <figure class="print"><img src="novo/m/ranking-top1.webp" alt="Classificação diária do TikTok LIVE com uma host da Live Plys em 1º lugar" loading="lazy" width="588" height="934"></figure>
       </div>
-      <div class="mural">
-        <figure class="peca alta"><img src="media/placa-2m.jpg" alt="Host segurando a placa de 2 milhões de diamantes no mês de julho" loading="lazy" width="900" height="1457"><figcaption><strong>Placa de 2 milhões</strong><span>Diamantes no mês de julho</span></figcaption></figure>
-        <figure class="peca alta"><img src="media/placa-500k.jpg" alt="Placa de 500 mil diamantes no mês de novembro" loading="lazy" width="738" height="1312"><figcaption><strong>Placa de 500 mil</strong><span>Diamantes no mês de novembro</span></figcaption></figure>
-        <figure class="peca alta"><img src="media/placas-top1.jpg" alt="Duas placas de Top 1 nos desafios Diamond Streamer e Elite Streamer" loading="lazy" width="900" height="1200"><figcaption><strong>Top 1 nos desafios</strong><span>Diamond Streamer e Elite Streamer</span></figcaption></figure>
+      <div class="placas">
+        <figure class="placa"><img src="novo/m/placa-2m.webp" alt="Host segurando a placa de 2 milhões de diamantes" loading="lazy" width="720" height="1166"><figcaption><b>2 milhões</b><span>Diamantes no mês de julho</span></figcaption></figure>
+        <figure class="placa"><img src="novo/m/placa-500k.webp" alt="Placa de 500 mil diamantes" loading="lazy" width="720" height="1280"><figcaption><b>500 mil</b><span>Diamantes no mês de novembro</span></figcaption></figure>
+        <figure class="placa"><img src="novo/m/placas-top1.webp" alt="Duas placas de Top 1 nos desafios Diamond Streamer e Elite Streamer" loading="lazy" width="720" height="960"><figcaption><b>Top 1 duas vezes</b><span>Desafios Diamond e Elite Streamer</span></figcaption></figure>
       </div>
       <div class="ganhos">
-        <figure class="peca"><img src="media/ganhos-1.jpg" alt="Recompensas de conteúdo de R$ 18.068,78" loading="lazy" width="900" height="446"></figure>
-        <figure class="peca"><img src="media/ganhos-2.jpg" alt="Recompensas de conteúdo de R$ 34.159,11" loading="lazy" width="900" height="445"></figure>
-        <figure class="peca"><img src="media/ganhos-3.jpg" alt="Recompensas de conteúdo de R$ 43.224,36" loading="lazy" width="900" height="445"></figure>
+        <img src="novo/m/ganhos-1.webp" alt="Print de recompensas de conteúdo de R$ 18.068,78" loading="lazy" width="900" height="446">
+        <img src="novo/m/ganhos-2.webp" alt="Print de recompensas de conteúdo de R$ 34.159,11" loading="lazy" width="900" height="445">
+        <img src="novo/m/ganhos-3.webp" alt="Print de recompensas de conteúdo de R$ 43.224,36" loading="lazy" width="900" height="445">
       </div>
-      <p class="nota">Prints reais de recompensas de hosts da agência. Os resultados variam de pessoa para pessoa e dependem da dedicação de cada uma.</p>
+      <p class="nota">Prints reais de hosts da agência. Não são promessa de ganho: os resultados variam de pessoa para pessoa e dependem dos dias, das horas e da dedicação de cada uma.</p>
     </div>
   </section>
 
-  <section class="secao" id="como-funciona">
+  <section class="secao batalha" id="batalha" aria-labelledby="titulo-batalha">
     <div class="wrap">
       <div class="cabeca">
-        <span class="pilula">Como funciona</span>
-        <h2>Da inscrição à <em>primeira meta</em></h2>
+        <h2 id="titulo-batalha">Live sozinha contra live com a Plys</h2>
+        <p>Toda host conhece a barra da batalha. Aqui ela mostra o que muda quando você tem uma agência do seu lado.</p>
       </div>
-      <ol class="passos">
-        <li><strong>Inscrição</strong><p>Você preenche o formulário abaixo e fala com a nossa equipe no WhatsApp.</p></li>
-        <li><strong>Convite no app</strong><p>Você nos passa seu código de convite do TikTok e aceita o convite dentro do próprio app. Sem senha, sem pagamento.</p></li>
-        <li><strong>Treinamento</strong><p>Nas duas primeiras semanas você aprende a montar sua rotina, prender a sala e fazer batalhas.</p></li>
-        <li><strong>Metas e bônus</strong><p>Toda semana olhamos seus números juntos. Bateu a meta do mês, entra na tabela de bônus.</p></li>
+      <div class="placar" aria-hidden="true">
+        <div class="placar-nomes">
+          <div><span class="pts">0</span>Sozinha</div>
+          <div><span class="pts">6</span>Com a Plys</div>
+        </div>
+        <div class="barra"><span class="lado-a"></span><span class="lado-b"></span><span class="faisca">VS</span><span class="vitoria">VITÓRIA</span></div>
+      </div>
+      <ol class="rounds">
+        <li class="round"><h3>Primeira live</h3><p class="sozinha">Você aprende errando, live por live.</p><p class="plys">Aula inaugural para novatas antes de entrar ao vivo.</p></li>
+        <li class="round"><h3>Dúvidas do dia a dia</h3><p class="sozinha">Pesquisa no Google e torce para dar certo.</p><p class="plys">Uma Creator Manager só sua, que acompanha suas lives e responde todo dia. Call de estratégia quando você quiser.</p></li>
+        <li class="round"><h3>Batalhas</h3><p class="sozinha">Batalha com quem aparecer.</p><p class="plys">Batalhas combinadas com as hosts da casa para trocar público e crescer junto.</p></li>
+        <li class="round"><h3>Evolução</h3><p class="sozinha">Ninguém olha seus números.</p><p class="plys">Creators Lab com aulas toda semana e desafios com prêmios.</p></li>
+        <li class="round"><h3>Reconhecimento</h3><p class="sozinha">Bateu recorde e ninguém viu.</p><p class="plys">Rankings por diamantes e por horas de live, placas comemorativas e sorteios de equipamento, cadeira gamer e iPhone.</p></li>
+        <li class="round"><h3>Dia difícil</h3><p class="sozinha">Você se vira sozinha.</p><p class="plys">Roda de conversa de suporte emocional com outras hosts.</p></li>
+      </ol>
+      <div class="batalha-pe">
+        <p>Custo para entrar: R$ 0 nos dois lados.</p>
+        <a class="botao uva" href="chat/">Quero o lado roxo</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao fundadora" id="fundadora">
+    <div class="wrap">
+      <div class="cabeca">
+        <h2>A Plys começou com uma live depois do expediente</h2>
+        <p>A cofundadora da agência já esteve exatamente onde você está agora. Essa é a história dela, contada em cinco momentos.</p>
+      </div>
+      <ol class="linha-tempo">
+        <li><b>Carteira assinada</b><span>Trabalhava numa distribuidora de gás, em horário comercial.</span></li>
+        <li><b>4 horas por noite</b><span>Começou a fazer live depois do trabalho, todo dia.</span></li>
+        <li><b>30 dias depois</b><span>Pediu demissão para viver das lives.</span></li>
+        <li><b>Cerca de 8 horas por dia</b><span>Virou rotina de trabalho de verdade, com constância.</span></li>
+        <li><b>A Live Plys</b><span>Abriu a agência para levar outras meninas pelo mesmo caminho, agora com acompanhamento.</span></li>
       </ol>
     </div>
   </section>
 
-  <section class="secao faixa">
+  <section class="secao" id="beneficios">
     <div class="wrap">
-      <div class="cabeca">
-        <span class="pilula">O que você recebe</span>
-        <h2>Você faz a live. <em>A gente acompanha.</em></h2>
-      </div>
-      <div class="beneficios-bloco">
-      <figure class="foto-arco"><img src="media/live-ringlight.jpg" alt="Mulher ajustando o celular no ring light antes de entrar ao vivo" loading="lazy" width="720" height="960"></figure>
-      <div class="beneficios">
-        <div class="beneficio"><h3>Treino do zero</h3><p>Como abrir a live, segurar quem entra e transformar presente em constância.</p></div>
-        <div class="beneficio"><h3>Olho nos números</h3><p>Conversa semanal sobre suas horas, dias e diamantes, com meta clara para o mês.</p></div>
-        <div class="beneficio"><h3>Batalhas em casa</h3><p>Agenda de batalhas com outras hosts da agência para trocar público e crescer junto.</p></div>
-        <div class="beneficio"><h3>Bônus por metas</h3><p>Tabela de bônus em dólar para quem bate as metas mensais da agência.</p></div>
-        <div class="beneficio"><h3>Prêmios e placas</h3><p>Kit de boas-vindas, ranking mensal e reconhecimento para quem se destaca.</p></div>
-        <div class="beneficio"><h3>Suporte com o app</h3><p>Ajuda com regras, segurança da conta e problemas técnicos na plataforma.</p></div>
-      </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="secao">
-    <div class="wrap">
-      <div class="cabeca">
-        <span class="pilula">Como é uma live</span>
-        <h2>Conversa, <em>batalha</em> e muita interação</h2>
-        <p>Nossas lives são de entretenimento: você conversa com o público, reage aos comentários, recebe presentes e enfrenta outras hosts em batalhas.</p>
-      </div>
-      <div class="momentos">
-        <figure class="momento"><img src="media/live-conversa.jpg" alt="Mulher conversando com o público em frente ao celular no tripé" loading="lazy" width="720" height="960"><figcaption><span class="pilula">Conversar</span></figcaption></figure>
-        <figure class="momento"><img src="media/live-asiatica.jpg" alt="Mulher rindo enquanto lê os comentários no celular" loading="lazy" width="720" height="960"><figcaption><span class="pilula">Ler os comentários</span></figcaption></figure>
-        <figure class="momento"><img src="media/live-loira.jpg" alt="Mulher apontando para a câmera e sorrindo" loading="lazy" width="720" height="960"><figcaption><span class="pilula">Chamar quem chega</span></figcaption></figure>
-        <figure class="momento"><img src="media/live-presente.jpg" alt="Mulher surpresa com as mãos no rosto ao receber um presente" loading="lazy" width="720" height="960"><figcaption><span class="pilula">Receber presentes</span></figcaption></figure>
-        <figure class="momento"><img src="media/live-batalha.jpg" alt="Mulher comemorando a vitória numa batalha" loading="lazy" width="720" height="960"><figcaption><span class="pilula">Vencer batalhas</span></figcaption></figure>
-        <figure class="momento"><img src="media/live-cacheada.jpg" alt="Mulher aplaudindo em frente ao celular no tripé" loading="lazy" width="720" height="960"><figcaption><span class="pilula">Comemorar juntas</span></figcaption></figure>
-        <figure class="momento"><img src="media/live-coracao.jpg" alt="Mulher fazendo coração com as mãos para a câmera" loading="lazy" width="720" height="960"><figcaption><span class="pilula">Criar sua torcida</span></figcaption></figure>
-        <figure class="momento"><img src="media/live-ruiva-curta.jpg" alt="Mulher ruiva de jaqueta verde mandando beijo para a câmera" loading="lazy" width="720" height="960"><figcaption><span class="pilula">Ser você mesma</span></figcaption></figure>
-      </div>
-      <p class="nota">Imagens ilustrativas.</p>
-    </div>
-  </section>
-
-  <section class="secao faixa">
-    <div class="wrap duas">
-      <div class="cabeca">
-        <span class="pilula">Para entrar</span>
-        <h2>Você <em>precisa</em> ter</h2>
-        <ul class="lista-check">
-          <li>18 anos ou mais</li>
-          <li>Conta no TikTok sem advertências recentes</li>
-          <li>Não estar em outra agência</li>
-          <li>Tempo para fazer live com frequência</li>
-          <li>Celular e internet estável</li>
-        </ul>
-        <figure class="foto-arco pequena"><img src="media/live-pensativa.jpg" alt="Mulher pensativa com a mão no queixo" loading="lazy" width="720" height="960"></figure>
-      </div>
-      <div class="faq" id="duvidas">
-        <details><summary>Preciso pagar alguma coisa?</summary><p>Não. A inscrição e o acompanhamento são gratuitos, e a agência não fica com parte dos seus diamantes.</p></details>
-        <details><summary>Preciso ter muitos seguidores?</summary><p>Não. Dá para começar do zero, desde que sua conta já tenha a função de live liberada.</p></details>
-        <details><summary>Quanto tempo de live preciso fazer?</summary><p>Combinamos sua rotina na entrada. Para entrar na tabela de bônus, existe uma meta mínima de dias e horas de live por mês.</p></details>
-        <details><summary>Quanto vou ganhar?</summary><p>Depende dos presentes que você recebe e das metas que bate. Ninguém pode garantir valores; o que garantimos é treino, acompanhamento e as condições para você crescer.</p></details>
-        <details><summary>Como a agência me adiciona?</summary><p>Pelo próprio TikTok. Você nos passa seu código de convite e aceita o convite no app. Nunca pedimos sua senha.</p></details>
-        <details><summary>Posso sair quando quiser?</summary><p>Sim. Explicamos como funciona a saída antes de você entrar, sem letras miúdas.</p></details>
-      </div>
-    </div>
-  </section>
-
-  <section class="inscricao" id="inscricao">
-    <div class="wrap">
-      <div class="cabeca">
-        <span class="pilula">Inscrição gratuita</span>
-        <h2>Sua vaga começa <em>aqui</em></h2>
-        <p>Preencha em menos de um minuto. Suas respostas vão direto para o nosso WhatsApp e a equipe te responde por lá.</p>
-        <figure class="foto-arco pequena"><img src="media/live-trancas.jpg" alt="Mulher sorrindo por cima do ombro ao lado do ring light" loading="lazy" width="720" height="960"></figure>
-      </div>
-      <form id="form-inscricao" novalidate>
-        <div class="campo largo"><label for="nome">Seu nome</label><input id="nome" name="nome" autocomplete="given-name" placeholder="Como você gosta de ser chamada" required></div>
-        <div class="campo"><label for="idade">Idade</label><input id="idade" name="idade" type="number" inputmode="numeric" min="1" max="99" placeholder="Ex.: 23" required></div>
-        <div class="campo"><label for="tiktok">@ do TikTok</label><input id="tiktok" name="tiktok" placeholder="@seuperfil" autocapitalize="none" required></div>
-        <div class="campo"><label for="agencia">Já está em outra agência?</label><select id="agencia" name="agencia" required><option value="">Escolha</option><option>Não</option><option>Sim</option><option>Já estive, mas saí</option></select></div>
-        <div class="campo"><label for="dias">Dias de live por semana</label><select id="dias" name="dias" required><option value="">Escolha</option><option>1 a 2 dias</option><option>3 a 4 dias</option><option>5 dias ou mais</option></select></div>
-        <div class="campo"><label for="horas">Horas disponíveis por dia</label><select id="horas" name="horas" required><option value="">Escolha</option><option>Até 1 hora</option><option>1 a 2 horas</option><option>2 a 4 horas</option><option>Mais de 4 horas</option></select></div>
-        <div class="campo"><label for="live">Você já faz live hoje?</label><select id="live" name="live" required><option value="">Escolha</option><option>Ainda não, quero começar</option><option>Sim, de vez em quando</option><option>Sim, faço sempre</option></select></div>
-        <p class="erro" id="erro" role="alert"></p>
-        <button class="botao lima" type="submit">Continuar no WhatsApp</button>
-        <div class="pronto" id="pronto" hidden>
-          <p>Tudo certo! Toque no botão para enviar suas respostas para a nossa equipe.</p>
-          <a class="botao lima" id="link-whats" href="https://wa.me/5511910980910" target="_blank" rel="noopener">Enviar no WhatsApp</a>
-          <div class="numero">Se não abrir, chame no número <code id="num">(11) 91098-0910</code><button class="copiar" type="button" id="copiar">Copiar</button></div>
+      <div class="beneficios-foto">
+        <figure class="arco"><img src="novo/m/live-ringlight.webp" alt="Mulher ajustando o celular no ring light antes de entrar ao vivo" loading="lazy" width="720" height="960"><figcaption>Imagem ilustrativa</figcaption></figure>
+        <div>
+          <div class="cabeca">
+            <h2>Tudo que vem junto, sem pagar nada</h2>
+            <p>A Live Plys faz parte do Grupo BNM, agência oficial do TikTok LIVE. Os benefícios do grupo valem para todas as agenciadas.</p>
+          </div>
+          <div class="beneficios">
+            <div class="beneficio"><h3>Creators Lab</h3><p>Aulas semanais e desafios com prêmios.</p></div>
+            <div class="beneficio"><h3>Cursos grátis</h3><p>Inglês, espanhol, oratória, vídeos curtos e TikTok LIVE Studio.</p></div>
+            <div class="beneficio"><h3>Rankings</h3><p>Por diamantes e por horas de live, com prêmios em diamantes.</p></div>
+            <div class="beneficio"><h3>Sorteios</h3><p>Equipamentos para live, cadeira gamer e iPhone.</p></div>
+            <div class="beneficio"><h3>Eventos</h3><p>BNM Summit, BNM Awards e BNM Connect.</p></div>
+            <div class="beneficio"><h3>Seus diamantes</h3><p>A agência não fica com parte do que você recebe.</p></div>
+          </div>
         </div>
-      </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao escura" id="como-entrar">
+    <div class="wrap">
+      <div class="cabeca">
+        <h2>Da primeira mensagem à primeira live</h2>
+        <p>Tudo acontece pelo chat e pelo próprio app do TikTok. Sem senha, sem documento, sem pagamento.</p>
+      </div>
+      <ol class="passos">
+        <li><b>Chama a gente</b><p>Deixe seu nome e WhatsApp no chat. A equipe te explica tudo, até em áudio.</p></li>
+        <li><b>Gere seu código</b><p>Pelo link oficial do TikTok você gera um código de convite de 6 letras e manda no chat.</p></li>
+        <li><b>A equipe te cadastra</b><p>Com o código, cadastramos seu perfil e você aceita o convite dentro do app.</p></li>
+        <li><b>Aula e primeira live</b><p>Você faz a aula inaugural e entra ao vivo já com a sua Creator Manager acompanhando.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="secao" id="duvidas">
+    <div class="wrap duas">
+      <div>
+        <div class="cabeca">
+          <h2>O que você precisa ter</h2>
+        </div>
+        <ul class="checks">
+          <li>18 anos ou mais</li>
+          <li>iPhone ou celular com câmera de boa qualidade</li>
+          <li>Pelo menos 3 horas por dia para fazer live</li>
+          <li>No mínimo 100 seguidores no TikTok</li>
+          <li>Não estar em outra agência</li>
+        </ul>
+      </div>
+      <div class="chat" aria-label="Perguntas que mais chegam no chat">
+        <div class="chat-topo"><img src="media/logo-verde.png" alt="" width="40" height="40"><span>Perguntas que mais chegam no chat<small>Toque numa pergunta para ver a resposta</small></span></div>
+        <details><summary>Isso é golpe?</summary><p>Super normal ter esse medo. A Live Plys é do Grupo BNM, agência oficial do TikTok LIVE. A inscrição é feita pelo próprio app do TikTok, com um código de convite, e você não paga nada nem passa senha ou documento.</p></details>
+        <details><summary>Preciso pagar alguma coisa?</summary><p>Nada. Entrar e ser acompanhada é grátis, e a agência não fica com parte dos seus diamantes.</p></details>
+        <details><summary>Tenho vergonha, nunca fiz live</summary><p>A maioria das meninas começou assim. Você tem a aula inaugural e uma Creator Manager que te ensina e acompanha suas primeiras lives.</p></details>
+        <details><summary>Quanto eu vou ganhar?</summary><p>Depende dos dias, das horas e de como você interage com o público. Ninguém pode garantir valor; o que a gente garante é treino, acompanhamento e as condições para você crescer.</p></details>
+        <details><summary>Tenho menos de 100 seguidores</summary><p>Dá para chegar rapidinho postando alguns vídeos. Quando bater 100, é só chamar a gente no chat.</p></details>
+        <details><summary>Posso sair quando quiser?</summary><p>Sim. A gente explica como funciona a saída antes de você entrar, sem letras miúdas.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final" id="entrar">
+    <div class="wrap">
+      <h2>Sua vaga começa numa conversa.<span class="l2">Bora?</span></h2>
+      <p>Chama a gente no chat: em poucos minutos você sabe se tem o perfil e recebe o passo a passo para entrar.</p>
+      <a class="botao lima" href="chat/">Conversar com a equipe</a>
+      <div class="contato">Prefere WhatsApp? <a href="https://wa.me/5511910980910" target="_blank" rel="noopener"><code id="num">(11) 91098-0910</code></a><button class="copiar" type="button" id="copiar">Copiar número</button></div>
     </div>
   </section>
 </main>
 
 <footer class="rodape">
   <div class="wrap">
-    <img src="media/logo-branco.png" alt="Live Plys Agency" width="1532" height="691">
+    <img src="media/logo-branco.png" alt="Live Plys Agency" width="1532" height="691" loading="lazy">
     <nav class="redes" aria-label="Redes da Live Plys">
       <a href="https://www.tiktok.com/@liveplysagency" target="_blank" rel="noopener">TikTok</a>
       <a href="https://www.instagram.com/liveplysagency" target="_blank" rel="noopener">Instagram</a>
       <a href="https://wa.me/5511910980910" target="_blank" rel="noopener">WhatsApp</a>
     </nav>
-    <p class="legal">Live Plys Agency é uma agência parceira aprovada pelo TikTok LIVE. TikTok é marca de seus respectivos donos. Para fazer live com presentes é preciso ter 18 anos ou mais. As fotos de pessoas fora das seções de vídeos e resultados são ilustrativas.</p>
+    <p class="legal">Live Plys Agency faz parte do Grupo BNM, agência oficial do TikTok LIVE. TikTok é marca de seus respectivos donos. Para fazer live com presentes é preciso ter 18 anos ou mais. Fotos de pessoas fora das seções de vídeos e resultados são ilustrativas.</p>
   </div>
 </footer>
 
+<div class="fixo" id="fixo"><a class="botao lima" href="chat/">Quero ser agenciada</a></div>
+
 <script>
 (function () {
-  var form = document.getElementById('form-inscricao');
-  var erro = document.getElementById('erro');
-  var pronto = document.getElementById('pronto');
-  var link = document.getElementById('link-whats');
-  var URL_PLANILHA = 'https://script.google.com/macros/s/AKfycbwNgmFP0NcyW8wnZyD76tA6nu0MC9xoEi9UWTOSWyMH5DPiEI3Ll_oYJpwmdv3OtuwF/exec';
-  var ultimoEnvio = '';
-  var ids = ['nome', 'idade', 'tiktok', 'agencia', 'dias', 'horas', 'live'];
-  var video = document.getElementById('video-topo');
-  var som = document.getElementById('som');
-  som.addEventListener('click', function () {
-    video.muted = !video.muted;
-    if (!video.muted) { video.volume = 1; var p = video.play(); if (p && p.catch) p.catch(function () {}); }
-    som.textContent = video.muted ? 'Ativar som' : 'Desativar som';
-    som.setAttribute('aria-pressed', String(!video.muted));
+  // stories: troca a capa pelo vídeo com som só quando a pessoa toca
+  document.querySelectorAll('.story-midia[data-video]').forEach(function (box) {
+    var btn = box.querySelector('.story-play');
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.story-midia video').forEach(function (v) { v.pause(); });
+      var v = document.createElement('video');
+      v.src = box.getAttribute('data-video');
+      v.controls = true; v.playsInline = true; v.autoplay = true;
+      var capa = box.querySelector('img'); if (capa) v.poster = capa.src;
+      box.replaceChildren(v);
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
+    });
   });
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    erro.textContent = '';
-    var v = {};
-    for (var i = 0; i < ids.length; i++) {
-      var el = document.getElementById(ids[i]);
-      v[ids[i]] = el.value.trim();
-      if (!v[ids[i]]) { erro.textContent = 'Preencha todos os campos para continuar.'; el.focus(); pronto.hidden = true; return; }
-    }
-    var idade = parseInt(v.idade, 10);
-    if (isNaN(idade) || idade < 18) {
-      erro.textContent = 'Para fazer live com presentes no TikTok é preciso ter 18 anos ou mais.';
-      pronto.hidden = true;
-      return;
-    }
-    var arroba = v.tiktok.charAt(0) === '@' ? v.tiktok : '@' + v.tiktok;
-    var msg = 'Olá, Live Plys! Quero ser agenciada.\n\n' +
-      'Nome: ' + v.nome + '\n' +
-      'Idade: ' + idade + '\n' +
-      'TikTok: ' + arroba + '\n' +
-      'Já está em agência: ' + v.agencia + '\n' +
-      'Dias de live por semana: ' + v.dias + '\n' +
-      'Horas disponíveis por dia: ' + v.horas + '\n' +
-      'Faz live hoje: ' + v.live;
-    link.href = 'https://wa.me/5511910980910?text=' + encodeURIComponent(msg);
-    var dados = JSON.stringify({ nome: v.nome, idade: idade, tiktok: arroba, agencia: v.agencia, dias: v.dias, horas: v.horas, live: v.live });
-    if (URL_PLANILHA && dados !== ultimoEnvio) {
-      ultimoEnvio = dados;
-      try {
-        fetch(URL_PLANILHA, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: dados }).catch(function () {});
-      } catch (err) {}
-    }
-    pronto.hidden = false;
-    link.focus();
-  });
+
+  // a batalha: a barra corre quando a seção aparece
+  var batalha = document.getElementById('batalha');
+  var pts = batalha.querySelectorAll('.pts');
+  if ('IntersectionObserver' in window) {
+    pts[1].textContent = '0';
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        batalha.classList.add('lutou'); io.disconnect();
+        var n = 0, t = setInterval(function () { n++; pts[1].textContent = String(n); if (n >= 6) clearInterval(t); }, 220);
+      });
+    }, { threshold: 0.35 });
+    io.observe(batalha.querySelector('.placar'));
+  } else batalha.classList.add('lutou');
+
+  // botão fixo no celular depois da primeira dobra, some no fechamento
+  var fixo = document.getElementById('fixo'), final = document.getElementById('entrar');
+  function ver() {
+    var r = final.getBoundingClientRect();
+    var mostra = window.scrollY > window.innerHeight * 0.8 && r.top > window.innerHeight;
+    fixo.classList.toggle('ver', mostra);
+  }
+  window.addEventListener('scroll', ver, { passive: true }); ver();
+
   document.getElementById('copiar').addEventListener('click', function () {
     var btn = this;
-    var texto = '11910980910';
-    function marcar() {
-      var r = document.createRange(); r.selectNodeContents(document.getElementById('num'));
-      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(texto).then(function () { btn.textContent = 'Copiado'; }, marcar);
-    } else { marcar(); }
+    function marcar() { var r = document.createRange(); r.selectNodeContents(document.getElementById('num')); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+    try {
+      navigator.clipboard.writeText('11910980910').then(function () { btn.textContent = 'Copiado'; }, marcar);
+    } catch (e) { marcar(); }
   });
 })();
 </script>
-
 </body>
 </html>
